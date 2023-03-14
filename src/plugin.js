@@ -35,8 +35,25 @@ class Cmcd {
         player.src(list[selectedValue]);
         player.load();
       });
+
+      this.tech().vhs.xhr.beforeRequest = function (opts) {
+        opts.uri += `?CMCD=${encodeURIComponent('a=b')}`;
+
+        return opts;
+      };
     });
   }
+}
+
+function buildQueryString(obj) {
+  var query = '';
+
+  // TODO: sort obj elements
+  for (const [key, value] of Object.entries(obj)) {
+    query += `${key}=${value},`;
+
+  }
+  return query.slice(0, -1);
 }
 
 // Define default values for the plugin's `state` object here.
