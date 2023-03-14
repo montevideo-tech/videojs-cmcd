@@ -6,7 +6,7 @@ export class CmcdRequest {
     this.vhs = player.tech().vhs;
   }
 
-  getBufferLength() { //This key SHOULD only be sent with an object type of ‘a’, ‘v’ or ‘av’.
+  bufferLengthMs() {
     try {
       const tech = this.player.tech(true);
       const buffered = tech.buffered(); 
@@ -20,10 +20,20 @@ export class CmcdRequest {
         }
       }
 
-      const bufferLengthMs = bufferLength.toFixed(2)*1000;
+      const bufferLengthMs = bufferLength*1000;
       return bufferLengthMs;
     }
     catch(e) {
+      return undefined;
+    }
+  }
+
+  getBufferLength() { //This key SHOULD only be sent with an object type of ‘a’, ‘v’ or ‘av’.
+    try {
+      const bufferLengthMs = this.bufferLengthMs();
+      return roundedToNearstHundredth(bufferLengthMs);
+    }
+    catch (e) {
       return undefined;
     }
     
@@ -31,9 +41,10 @@ export class CmcdRequest {
 
   getDeadline() {
     try {
-      const bufferLength = this.getBufferLength();
+      const bufferLength = this.bufferLengthMs();
       const playbackRate = this.player.playbackRate()*1000;
-      return Math.round(bufferLength / playbackRate);
+      const deadline = Math.round(bufferLength / playbackRate);
+      return roundedToNearstHundredth(deadline);
     }
     catch(e) {
       return undefined;
@@ -43,7 +54,7 @@ export class CmcdRequest {
   getMeasuredThroughput() {
     try {
       const bandwidth = Math.round(this.vhs.systemBandwidth / 1000);
-      return bandwidth;
+      return roundedToNearstHundredth(bandwidth);
     }
     catch(e) {
       return undefined;
@@ -67,9 +78,9 @@ export class CmcdRequest {
 
   getKeys() {
     return {
-      bl: roundedToNearstHundredth(this.getBufferLength()),
-      dl: roundedToNearstHundredth(this.getDeadline()),
-      mtp: roundedToNearstHundredth(this.getMeasuredThroughput()),
+      bl: this.getBufferLength(),
+      dl: this.getDeadline(),
+      mtp: this.getMeasuredThroughput(),
       nor: this.getNextObjectRequest(),
       nrr: this.getNextRangeRequest(),
       su: this.getStartup()
