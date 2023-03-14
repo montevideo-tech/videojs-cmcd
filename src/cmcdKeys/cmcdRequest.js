@@ -7,31 +7,47 @@ export class CmcdRequest {
   }
 
   getBufferLength() { //This key SHOULD only be sent with an object type of ‘a’, ‘v’ or ‘av’.
-    const tech = this.player.tech(true);
-    const buffered = tech.buffered(); 
-    var bufferLength = 0;
+    try {
+      const tech = this.player.tech(true);
+      const buffered = tech.buffered(); 
+      var bufferLength = 0;
 
-    if (buffered.length > 0) {
-      const lastBufferedTime = buffered.end(buffered.length - 1);
+      if (buffered.length > 0) {
+        const lastBufferedTime = buffered.end(buffered.length - 1);
 
-      if (!isNaN(lastBufferedTime)) { 
-        bufferLength = lastBufferedTime - tech.currentTime();
+        if (!isNaN(lastBufferedTime)) { 
+          bufferLength = lastBufferedTime - tech.currentTime();
+        }
       }
-    }
 
-    const bufferLengthMs = bufferLength.toFixed(2)*1000;
-    return bufferLengthMs;
+      const bufferLengthMs = bufferLength.toFixed(2)*1000;
+      return bufferLengthMs;
+    }
+    catch(e) {
+      return undefined;
+    }
+    
   }
 
   getDeadline() {
-    const bufferLength = this.getBufferLength();
-    const playbackRate = this.player.playbackRate()*1000;
-    return Math.round(bufferLength / playbackRate);
+    try {
+      const bufferLength = this.getBufferLength();
+      const playbackRate = this.player.playbackRate()*1000;
+      return Math.round(bufferLength / playbackRate);
+    }
+    catch(e) {
+      return undefined;
+    }
   }
 
   getMeasuredThroughput() {
-    const bandwidth = Math.round(this.vhs.systemBandwidth / 1000);
-    return bandwidth;
+    try {
+      const bandwidth = Math.round(this.vhs.systemBandwidth / 1000);
+      return bandwidth;
+    }
+    catch(e) {
+      return undefined;
+    }
   }
 
   getNextObjectRequest() {

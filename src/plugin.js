@@ -34,6 +34,8 @@ class Cmcd {
         const cmcdRequest = new CmcdRequest(player);
         const keyRequest = cmcdRequest.getKeys();
 
+        console.log(keyRequest)
+
         opts.uri += `?CMCD=${encodeURIComponent('a=b')}`;
 
         return opts;
