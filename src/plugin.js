@@ -26,6 +26,12 @@ class Cmcd {
 
     this.ready(() => {
       this.addClass('vjs-cmcd');
+
+      this.tech_.vhs.xhr.beforeRequest = function(opts) {
+        opts.uri += `?CMCD=${encodeURIComponent('a=b')}`;
+
+        return opts;
+      };
     });
   }
 }
