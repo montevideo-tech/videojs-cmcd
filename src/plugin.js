@@ -1,5 +1,6 @@
 import videojs from 'video.js';
 import { version as VERSION } from '../package.json';
+import { CmcdRequest } from './cmcdKeys/cmcdRequest';
 
 // Default options for the plugin.
 const defaults = {};
@@ -22,12 +23,18 @@ class Cmcd {
    *         from your plugin's caller.
    */
   constructor(options) {
-    this.options = videojs.mergeOptions(defaults, options);
+    this.options = videojs.obj.merge(defaults, options);
 
     this.ready(() => {
       this.addClass('vjs-cmcd');
 
+      const player = this;
+
       this.tech().vhs.xhr.beforeRequest = function(opts) {
+
+        const cmcdRequest = new CmcdRequest(player);
+        const keyRequest = cmcdRequest.getKeys();
+
         opts.uri += `?CMCD=${encodeURIComponent('a=b')}`;
 
         return opts;
