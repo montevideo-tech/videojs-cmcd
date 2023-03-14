@@ -5,36 +5,42 @@ export class CmcdRequest {
 
   getBufferLength() {
     //TODO
+    return undefined;
   }
 
   getDeadline() {
     //TODO
+    return undefined;
   }
 
   getMeasuredThroughput() {
     //TODO
+    return undefined;
   }
 
   getNextObjectRequest() {
     //TODO
+    return undefined;
   }
 
   getNextRangeRequest() {
     //TODO
+    return undefined;
   }
 
   getStartup() {
     //TODO
+    return undefined;
   }
 
   getKeys() {
     return {
-      bl: getBufferLength(),
-      dl: getDeadline(),
-      mtp: getMeasuredThroughput(),
-      nor: getNextObjectRequest(),
-      nrr: getNextRangeRequest(),
-      su: getStartup()
+      bl: this.getBufferLength(),
+      dl: this.getDeadline(),
+      mtp: this.getMeasuredThroughput(),
+      nor: this.getNextObjectRequest(),
+      nrr: this.getNextRangeRequest(),
+      su: this.getStartup()
     }
   }
 }

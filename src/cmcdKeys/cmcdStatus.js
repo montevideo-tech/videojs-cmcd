@@ -5,16 +5,18 @@ export class CmcdStatus {
 
   getBufferStarvation() {
     //TODO
+    return undefined;
   }
 
   getRequestedMaximumThroughput() {
     //TODO
+    return undefined;
   }
 
   getKeys() {
     return {
-      bs: getBufferStarvation(),
-      rtp: getRequestedMaximumThroughput()
-    }   
+      bs: this.getBufferStarvation(),
+      rtp: this.getRequestedMaximumThroughput()
+    }
   }
 }
