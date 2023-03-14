@@ -26,8 +26,9 @@ class Cmcd {
 
     this.ready(() => {
       this.addClass('vjs-cmcd');
+      const player = this;
 
-      this.tech().vhs.xhr.beforeRequest = function(opts) {
+      this.tech().vhs.xhr.beforeRequest = function (opts) {
         opts.uri += `?CMCD=${encodeURIComponent('a=b')}`;
 
         return opts;
@@ -38,10 +39,10 @@ class Cmcd {
 
 function buildQueryString(obj) {
   var query = '';
-  
+
   // TODO: sort obj elements
   for (const [key, value] of Object.entries(obj)) {
-      query += `${key}=${value},`;
+    query += `${key}=${value},`;
 
   }
   return query.slice(0, -1);
