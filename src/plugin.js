@@ -1,4 +1,5 @@
 import videojs from 'video.js';
+import list from '../listOfVideos.js';
 import { version as VERSION } from '../package.json';
 
 // Default options for the plugin.
@@ -23,9 +24,17 @@ class Cmcd {
    */
   constructor(options) {
     this.options = videojs.mergeOptions(defaults, options);
+    const player = this;
 
     this.ready(() => {
       this.addClass('vjs-cmcd');
+      const videoSelector = document.getElementById('video-selector');
+
+      videoSelector.addEventListener('change', (event) => {
+        const selectedValue = event.target.value;
+        player.src(list[selectedValue]);
+        player.load();
+      });
     });
   }
 }
