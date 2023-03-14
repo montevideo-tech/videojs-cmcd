@@ -1,11 +1,13 @@
 <!doctype html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>videojs-cmcd Demo</title>
   <link href="node_modules/video.js/dist/video-js.css" rel="stylesheet">
-  
+
 </head>
+
 <body>
   <video id="videojs-cmcd-player" class="video-js vjs-default-skin" controls>
     <source src="https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" 
@@ -24,10 +26,10 @@
   <script src="dist/videojs-cmcd.js"></script>
   <script>
     (function(window, videojs) {
-
       var examplePlayer = window.examplePlayer = videojs('videojs-cmcd-player');
       var cmcd = window.cmcd = examplePlayer.cmcd();
     }(window, window.videojs));
   </script>
 </body>
+
 </html>
