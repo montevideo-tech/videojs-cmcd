@@ -34,9 +34,11 @@ class Cmcd {
         const cmcdRequest = new CmcdRequest(player);
         const keyRequest = cmcdRequest.getKeys();
 
-        console.log(keyRequest)
-
-        opts.uri += `?CMCD=${encodeURIComponent('a=b')}`;
+        if (opts.uri.match(/\?./)) {
+          opts.uri += `&CMCD=${buildQueryString(keyRequest)}`;
+        } else {
+          opts.uri += `?CMCD=${buildQueryString(keyRequest)}`;
+        }
 
         return opts;
       };
@@ -45,14 +47,19 @@ class Cmcd {
 }
 
 function buildQueryString(obj) {
-  var query = '';
+  let query = '';
 
-  // TODO: sort obj elements
-  for (const [key, value] of Object.entries(obj)) {
+  const sortedObj = Object.keys(obj).sort().reduce((objEntries, key) => {
+    if (obj[key] !== undefined) {
+      objEntries[key] = obj[key];
+    }
+    return objEntries;
+  }, {});
+
+  for (const [key, value] of Object.entries(sortedObj)) {
     query += `${key}=${value},`;
-
   }
-  return query.slice(0, -1);
+  return encodeURIComponent(query.slice(0, -1));
 }
 
 // Define default values for the plugin's `state` object here.
