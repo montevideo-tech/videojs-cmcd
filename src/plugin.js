@@ -1,6 +1,8 @@
 import videojs from 'video.js';
 import list from '../listOfVideos.js';
 import { version as VERSION } from '../package.json';
+import { CmcdSession } from './cmcdKeys/cmcdSession';
+
 
 // Default options for the plugin.
 const defaults = {};
@@ -11,6 +13,7 @@ const defaults = {};
  * See: https://blog.videojs.com/feature-spotlight-advanced-plugins/
  */
 class Cmcd {
+
 
   /**
    * Create a Cmcd plugin instance.
@@ -24,12 +27,13 @@ class Cmcd {
    */
   constructor(options) {
     this.options = videojs.mergeOptions(defaults, options);
+    console.log(sid);
     const player = this;
+    const sid = crypto.randomUUID();
 
     this.ready(() => {
       this.addClass('vjs-cmcd');
       const videoSelector = document.getElementById('video-selector');
-
       videoSelector.addEventListener('change', (event) => {
         const selectedValue = event.target.value;
         player.src(list[selectedValue]);
@@ -37,10 +41,14 @@ class Cmcd {
       });
 
       this.tech().vhs.xhr.beforeRequest = function (opts) {
+        console.log('ENTRE AL REQUEST')
         opts.uri += `?CMCD=${encodeURIComponent('a=b')}`;
-
+        const cmcdSession = new CmcdSession(player,sid);
+        const keys = cmcdSession.getKeys(player.currentSrc());
+        console.log('estas son las keys', keys);
         return opts;
       };
+      
     });
   }
 }
@@ -51,7 +59,6 @@ function buildQueryString(obj) {
   // TODO: sort obj elements
   for (const [key, value] of Object.entries(obj)) {
     query += `${key}=${value},`;
-
   }
   return query.slice(0, -1);
 }
