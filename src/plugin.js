@@ -28,15 +28,9 @@ class Cmcd {
 
     this.ready(() => {
       this.addClass('vjs-cmcd');
-      const videoSelector = document.getElementById('video-selector');
-
-      videoSelector.addEventListener('change', (event) => {
-        const selectedValue = event.target.value;
-        player.src(list[selectedValue]);
-        player.load();
-      });
 
       this.tech().vhs.xhr.beforeRequest = function (opts) {
+        console.log(opts.uri)
         opts.uri += `?CMCD=${encodeURIComponent('a=b')}`;
 
         return opts;
