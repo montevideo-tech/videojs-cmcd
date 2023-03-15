@@ -5,13 +5,12 @@
   <meta charset="utf-8">
   <title>videojs-cmcd Demo</title>
   <link href="node_modules/video.js/dist/video-js.css" rel="stylesheet">
-
 </head>
 
 <body>
   <video id="videojs-cmcd-player" class="video-js vjs-default-skin" controls>
     <source src="https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" 
-    type="application/x-mpegURL">
+    type="application/x-mpegURL" id="pepe">
   </video>
   <select id="video-selector">
     <option value= "0" > Big Buck Bunny (HLS) </option>
@@ -29,6 +28,34 @@
     (function(window, videojs) {
       var examplePlayer = window.examplePlayer = videojs('videojs-cmcd-player');
       var cmcd = window.cmcd = examplePlayer.cmcd();
+
+
+
+      const videoSelector = window.document.getElementById('video-selector');
+      videoSelector.addEventListener('change', (event) => {
+        const list = [
+          {
+            src: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
+            type: 'application/x-mpegURL'
+          },
+          {
+            src: 'http://d3rlna7iyyu8wu.cloudfront.net/skip_armstrong/skip_armstrong_stereo_subs.m3u8',
+            type: 'application/x-mpegURL'
+          },
+          {
+            src: 'https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8',
+            type: 'application/x-mpegURL'
+          },
+          {
+            src: 'https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd',
+            type: 'application/dash+xml'
+          }
+        ];
+        const selectedValue = event.target.value;
+
+        examplePlayer.src(list[selectedValue]);
+        examplePlayer.cmcd();
+      });
     }(window, window.videojs));
   </script>
 </body>
