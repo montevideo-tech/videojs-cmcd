@@ -5,7 +5,6 @@ export class CmcdSession {
   }
 
   generateHashCode(string) {
-    console.log('el string que voy a usar es', string)
     let hash = 0;
     if (string.length === 0) {
       return hash;
@@ -44,7 +43,6 @@ export class CmcdSession {
   }
 
   getStreamingFormat() {
-    //TODO
     try {
       const type = this.player.currentType()
       if (type == 'application/dash+xml') {
@@ -73,7 +71,6 @@ export class CmcdSession {
   }
 
   getVersion() {
-    //TODO
     return 1;
   }
 

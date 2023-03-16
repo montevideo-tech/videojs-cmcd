@@ -27,7 +27,6 @@ class Cmcd {
    */
   constructor(options) {
     this.options = videojs.mergeOptions(defaults, options);
-    console.log(sid);
     const player = this;
     const sid = crypto.randomUUID();
 
@@ -41,11 +40,9 @@ class Cmcd {
       });
 
       this.tech().vhs.xhr.beforeRequest = function (opts) {
-        console.log('ENTRE AL REQUEST')
         opts.uri += `?CMCD=${encodeURIComponent('a=b')}`;
         const cmcdSession = new CmcdSession(player,sid);
         const keys = cmcdSession.getKeys(player.currentSrc());
-        console.log('estas son las keys', keys);
         return opts;
       };
       
