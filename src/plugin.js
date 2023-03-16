@@ -1,4 +1,5 @@
 import videojs from 'video.js';
+import list from '../listOfVideos.js';
 import { version as VERSION } from '../package.json';
 import { CmcdRequest } from './cmcdKeys/cmcdRequest';
 
@@ -24,10 +25,10 @@ class Cmcd {
    */
   constructor(options) {
     this.options = videojs.obj.merge(defaults, options);
+    const player = this;
 
     this.ready(() => {
       this.addClass('vjs-cmcd');
-      const player = this;
 
       this.tech().vhs.xhr.beforeRequest = function(opts) {
 
