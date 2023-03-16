@@ -43,7 +43,6 @@ class Cmcd {
           ...keyObject
         }
 
-        console.log(keyObject);
         console.log(cmcdKeysObject);
 
         if (opts.uri.match(/\?./)) {

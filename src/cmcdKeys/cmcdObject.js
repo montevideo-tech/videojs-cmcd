@@ -7,7 +7,7 @@ export class CmcdObject {
     try {
 
       //Get the bandwidth of the current quality  
-      const bandwidth = player.tech(true).vhs.playlists.media_.attributes.BANDWIDTH;
+      const bandwidth = this.player.tech(true).vhs.playlists.media_.attributes.BANDWIDTH;
 
       //Get the encodedBitrate by converting the bandwidth to kbps and rounding it to an Int
       const encodedBitrate = Math.round(bandwidth / 1000);
@@ -23,7 +23,7 @@ export class CmcdObject {
     try {
 
       //Get the current playlist
-      const playlist = player.tech(true).vhs.playlists.media();
+      const playlist = this.player.tech(true).vhs.playlists.media();
 
       //Get the current segment index
       const currentSegmentIndex = playlist.segments.findIndex(segment => segment.resolvedUri === uriBeingRequested);
@@ -48,7 +48,7 @@ export class CmcdObject {
     try {
 
       //Get the list of available quality levels
-      const qualitylevels = player.qualityLevels().levels_;
+      const qualitylevels = this.player.qualityLevels().levels_;
 
       //Get the highest bitrate
       const highestBitrate = qualitylevels.reduce(function (prev, current) {
@@ -56,7 +56,7 @@ export class CmcdObject {
       });
 
       //Get the topBitrate, convert to kbps and round it
-      var topBitrate = Math.round(highestBitrate.bitrate / 1000);
+      const topBitrate = Math.round(highestBitrate.bitrate / 1000);
 
       return topBitrate;
 
