@@ -1,21 +1,64 @@
+import { roundedToNearstHundredth } from './common';
+
 export class CmcdRequest {
   constructor(player) {
-    this.player = player
+    this.player = player;
+    this.vhs = player.tech().vhs;
   }
 
-  getBufferLength() {
-    //TODO
-    return undefined;
+  bufferLengthMs() {
+    try {
+      const tech = this.player.tech(true);
+      const buffered = tech.buffered(); 
+      var bufferLength = 0;
+
+      if (buffered.length > 0) {
+        const lastBufferedTime = buffered.end(buffered.length - 1);
+
+        if (!isNaN(lastBufferedTime)) { 
+          bufferLength = lastBufferedTime - tech.currentTime();
+        }
+      }
+
+      const bufferLengthMs = bufferLength*1000;
+      return bufferLengthMs;
+    }
+    catch(e) {
+      return undefined;
+    }
+  }
+
+  getBufferLength() { //This key SHOULD only be sent with an object type of ‘a’, ‘v’ or ‘av’.
+    try {
+      const bufferLengthMs = this.bufferLengthMs();
+      return roundedToNearstHundredth(bufferLengthMs);
+    }
+    catch (e) {
+      return undefined;
+    }
+    
   }
 
   getDeadline() {
-    //TODO
-    return undefined;
+    try {
+      const bufferLength = this.bufferLengthMs();
+      const playbackRate = this.player.playbackRate()*1000;
+      const deadline = Math.round(bufferLength / playbackRate);
+      return roundedToNearstHundredth(deadline);
+    }
+    catch(e) {
+      return undefined;
+    }
   }
 
   getMeasuredThroughput() {
-    //TODO
-    return undefined;
+    try {
+      const bandwidth = Math.round(this.vhs.systemBandwidth / 1000);
+      return roundedToNearstHundredth(bandwidth);
+    }
+    catch(e) {
+      return undefined;
+    }
   }
 
   getNextObjectRequest() {
@@ -31,7 +74,7 @@ export class CmcdRequest {
   getStartup() {
     //TODO
     return undefined;
-  }
+  }  
 
   getKeys() {
     return {

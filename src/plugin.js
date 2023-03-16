@@ -1,7 +1,7 @@
 import videojs from 'video.js';
-import list from '../listOfVideos.js';
 import { version as VERSION } from '../package.json';
-import { CmcdSession } from './cmcdKeys/cmcdSession';
+import { CmcdRequest } from './cmcdKeys/cmcdRequest';
+import { CmcdObject } from './cmcdKeys/cmcdObject';
 
 
 // Default options for the plugin.
@@ -26,23 +26,33 @@ class Cmcd {
    *         from your plugin's caller.
    */
   constructor(options) {
-    this.options = videojs.mergeOptions(defaults, options);
+    this.options = videojs.obj.merge(defaults, options);
     const player = this;
     const sid = crypto.randomUUID();
 
     this.ready(() => {
       this.addClass('vjs-cmcd');
-      const videoSelector = document.getElementById('video-selector');
-      videoSelector.addEventListener('change', (event) => {
-        const selectedValue = event.target.value;
-        player.src(list[selectedValue]);
-        player.load();
-      });
 
-      this.tech().vhs.xhr.beforeRequest = function (opts) {
-        opts.uri += `?CMCD=${encodeURIComponent('a=b')}`;
-        const cmcdSession = new CmcdSession(player,sid);
-        const keys = cmcdSession.getKeys(player.currentSrc());
+      this.tech().vhs.xhr.beforeRequest = function(opts) {
+
+        const cmcdRequest = new CmcdRequest(player);
+        const keyRequest = cmcdRequest.getKeys();
+        const cmcdObject = new CmcdObject(player);
+        const keyObject = cmcdObject.getKeys(opts.uri);
+        
+        const cmcdKeysObject = {
+          ...keyRequest,
+          ...keyObject
+        }
+
+        console.log(cmcdKeysObject);
+
+        if (opts.uri.match(/\?./)) {
+          opts.uri += `&CMCD=${buildQueryString(cmcdKeysObject)}`;
+        } else {
+          opts.uri += `?CMCD=${buildQueryString(cmcdKeysObject)}`;
+        }
+
         return opts;
       };
       
@@ -51,13 +61,19 @@ class Cmcd {
 }
 
 function buildQueryString(obj) {
-  var query = '';
+  let query = '';
 
-  // TODO: sort obj elements
-  for (const [key, value] of Object.entries(obj)) {
+  const sortedObj = Object.keys(obj).sort().reduce((objEntries, key) => {
+    if (obj[key] !== undefined) {
+      objEntries[key] = obj[key];
+    }
+    return objEntries;
+  }, {});
+
+  for (const [key, value] of Object.entries(sortedObj)) {
     query += `${key}=${value},`;
   }
-  return query.slice(0, -1);
+  return encodeURIComponent(query.slice(0, -1));
 }
 
 // Define default values for the plugin's `state` object here.
