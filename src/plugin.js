@@ -1,5 +1,4 @@
 import videojs from 'video.js';
-import list from '../listOfVideos.js';
 import { version as VERSION } from '../package.json';
 import { CmcdRequest } from './cmcdKeys/cmcdRequest';
 
