@@ -32,18 +32,16 @@ class Cmcd {
     this.ready(() => {
       this.addClass('vjs-cmcd');
 
-      this.tech().vhs.xhr.beforeRequest = function(opts) {
+      const cmcdRequest = new CmcdRequest(player);
+      const cmcdObject = new CmcdObject(player);
+      const cmcdSession = new CmcdSession(player, sid);
 
-        const cmcdRequest = new CmcdRequest(player);
+      this.tech(true).vhs.xhr.beforeRequest = function(opts) { 
         const keyRequest = cmcdRequest.getKeys();
-        const cmcdObject = new CmcdObject(player);
         const keyObject = cmcdObject.getKeys(opts.uri);
-        const cmcdSession = new CmcdSession(player,sid);
         const keySession = cmcdSession.getKeys(player.currentSrc());
 
         const cmcdKeysObject = Object.assign({}, keyRequest, keyObject, keySession);
-
-        console.log(cmcdKeysObject);
 
         if (opts.uri.match(/\?./)) {
           opts.uri += `&CMCD=${buildQueryString(cmcdKeysObject)}`;
@@ -67,10 +65,11 @@ function buildQueryString(obj) {
     }
     return objEntries;
   }, {});
-
+  console.log(sortedObj);
   for (const [key, value] of Object.entries(sortedObj)) {
-    query += `${key}=${value},`;
+    query += `${key}=${JSON.stringify(value)},`;
   }
+ 
   return encodeURIComponent(query.slice(0, -1));
 }
 

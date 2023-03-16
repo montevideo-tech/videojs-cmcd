@@ -19,11 +19,11 @@ export class CmcdSession {
     return hash;
   }
 
-  getContentId(url) {
+  getContentId(src) {
     try {
-      const cid = this.generateHashCode(url);
+      const cid = this.generateHashCode(src);
 
-      return cid;
+      return cid.toString();
     } catch (e) {
       return undefined;
     }
@@ -74,9 +74,9 @@ export class CmcdSession {
     return 1;
   }
 
-  getKeys(url) {
+  getKeys(src) {
     return {
-      cid: this.getContentId(url),
+      cid: this.getContentId(src),
       pr: this.getPlaybackRate(),
       sf: this.getStreamingFormat(),
       sid: this.sid,
