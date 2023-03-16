@@ -1,7 +1,8 @@
 import videojs from 'video.js';
-import list from '../listOfVideos.js';
 import { version as VERSION } from '../package.json';
 import { CmcdRequest } from './cmcdKeys/cmcdRequest';
+import { CmcdObject } from './cmcdKeys/cmcdObject';
+
 
 // Default options for the plugin.
 const defaults = {};
@@ -34,11 +35,21 @@ class Cmcd {
 
         const cmcdRequest = new CmcdRequest(player);
         const keyRequest = cmcdRequest.getKeys();
+        const cmcdObject = new CmcdObject(player);
+        const keyObject = cmcdObject.getKeys(opts.uri);
+        
+        const cmcdKeysObject = {
+          ...keyRequest,
+          ...keyObject
+        }
+
+        console.log(keyObject);
+        console.log(cmcdKeysObject);
 
         if (opts.uri.match(/\?./)) {
-          opts.uri += `&CMCD=${buildQueryString(keyRequest)}`;
+          opts.uri += `&CMCD=${buildQueryString(cmcdKeysObject)}`;
         } else {
-          opts.uri += `?CMCD=${buildQueryString(keyRequest)}`;
+          opts.uri += `?CMCD=${buildQueryString(cmcdKeysObject)}`;
         }
 
         return opts;
