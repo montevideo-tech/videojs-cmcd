@@ -2,7 +2,7 @@ import videojs from 'video.js';
 import { version as VERSION } from '../package.json';
 import { CmcdRequest } from './cmcdKeys/cmcdRequest';
 import { CmcdObject } from './cmcdKeys/cmcdObject';
-
+import { CmcdSession } from './cmcdKeys/cmcdSession';
 
 // Default options for the plugin.
 const defaults = {};
@@ -27,6 +27,7 @@ class Cmcd {
   constructor(options) {
     this.options = videojs.obj.merge(defaults, options);
     const player = this;
+    const sid = crypto.randomUUID();
 
     this.ready(() => {
       this.addClass('vjs-cmcd');
@@ -37,11 +38,10 @@ class Cmcd {
         const keyRequest = cmcdRequest.getKeys();
         const cmcdObject = new CmcdObject(player);
         const keyObject = cmcdObject.getKeys(opts.uri);
-        
-        const cmcdKeysObject = {
-          ...keyRequest,
-          ...keyObject
-        }
+        const cmcdSession = new CmcdSession(player,sid);
+        const keySession = cmcdSession.getKeys(player.currentSrc());
+
+        const cmcdKeysObject = Object.assign({}, keyRequest, keyObject, keySession);
 
         console.log(cmcdKeysObject);
 
@@ -53,6 +53,7 @@ class Cmcd {
 
         return opts;
       };
+
     });
   }
 }
