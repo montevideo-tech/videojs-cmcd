@@ -5,6 +5,8 @@ import { CmcdObject } from './cmcdKeys/cmcdObject';
 import { CmcdSession } from './cmcdKeys/cmcdSession';
 import crypto from 'crypto';
 
+var isWaitingEvent = true; 
+
 // Default options for the plugin.
 const defaults = {};
 
@@ -37,8 +39,11 @@ class Cmcd {
       const cmcdObject = new CmcdObject(player);
       const cmcdSession = new CmcdSession(player, sid);
 
-      this.tech(true).vhs.xhr.beforeRequest = function(opts) {
-        const keyRequest = cmcdRequest.getKeys();
+      handleEvents(player);
+
+      this.tech(true).vhs.xhr.beforeRequest = function(opts) { 
+        
+        const keyRequest = cmcdRequest.getKeys(opts.uri, isWaitingEvent);
         const keyObject = cmcdObject.getKeys(opts.uri);
         const keySession = cmcdSession.getKeys(player.currentSrc());
 
@@ -49,7 +54,6 @@ class Cmcd {
         } else {
           opts.uri += `?CMCD=${buildQueryString(cmcdKeysObject)}`;
         }
-
         return opts;
       };
 
@@ -71,6 +75,23 @@ function buildQueryString(obj) {
     query += `${key}=${JSON.stringify(value)},`;
   }
   return encodeURIComponent(query.slice(0, -1));
+}
+
+function handleEvents(player) {
+  // startup
+  player.on('loadedmetadata', function() { 
+    isWaitingEvent = false;
+  });
+
+  // seeking or buffer-empty event
+  player.on('waiting', function() { 
+    isWaitingEvent = true;
+  });
+  
+  // all it's okey
+  player.on('playing', function() { 
+    isWaitingEvent = false;
+  });
 }
 
 // Define default values for the plugin's `state` object here.
