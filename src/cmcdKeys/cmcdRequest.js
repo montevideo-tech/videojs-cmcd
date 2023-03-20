@@ -3,7 +3,7 @@ import { roundedToNearstHundredth } from './common';
 export class CmcdRequest {
   constructor(player) {
     this.player = player;
-    this.vhs = player.tech().vhs;
+    this.vhs = player.tech(true).vhs;
   }
 
   bufferLengthMs() {

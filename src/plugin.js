@@ -1,6 +1,8 @@
 import videojs from 'video.js';
 import { version as VERSION } from '../package.json';
 import { CmcdRequest } from './cmcdKeys/cmcdRequest';
+import { CmcdObject } from './cmcdKeys/cmcdObject';
+import { CmcdSession } from './cmcdKeys/cmcdSession';
 
 // Default options for the plugin.
 const defaults = {};
@@ -25,22 +27,30 @@ class Cmcd {
   constructor(options) {
     this.options = videojs.obj.merge(defaults, options);
     const player = this;
+    const sid = crypto.randomUUID();
 
     this.ready(() => {
       this.addClass('vjs-cmcd');
 
-      this.tech().vhs.xhr.beforeRequest = function(opts) {
+      const cmcdRequest = new CmcdRequest(player);
+      const cmcdObject = new CmcdObject(player);
+      const cmcdSession = new CmcdSession(player, sid);
 
-        const cmcdRequest = new CmcdRequest(player);
+      this.tech(true).vhs.xhr.beforeRequest = function(opts) { 
         const keyRequest = cmcdRequest.getKeys();
+        const keyObject = cmcdObject.getKeys(opts.uri);
+        const keySession = cmcdSession.getKeys(player.currentSrc());
+
+        const cmcdKeysObject = Object.assign({}, keyRequest, keyObject, keySession);
 
         if (opts.uri.match(/\?./)) {
-          opts.uri += `&CMCD=${buildQueryString(keyRequest)}`;
+          opts.uri += `&CMCD=${buildQueryString(cmcdKeysObject)}`;
         } else {
-          opts.uri += `?CMCD=${buildQueryString(keyRequest)}`;
+          opts.uri += `?CMCD=${buildQueryString(cmcdKeysObject)}`;
         }
         return opts;
       };
+
     });
   }
 }
@@ -54,10 +64,11 @@ function buildQueryString(obj) {
     }
     return objEntries;
   }, {});
-
+  console.log(sortedObj);
   for (const [key, value] of Object.entries(sortedObj)) {
-    query += `${key}=${value},`;
+    query += `${key}=${JSON.stringify(value)},`;
   }
+ 
   return encodeURIComponent(query.slice(0, -1));
 }
 
