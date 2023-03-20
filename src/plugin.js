@@ -60,6 +60,7 @@ class Cmcd {
 function buildQueryString(obj) {
   let query = '';
   const sortedObj = Object.keys(obj).sort().reduce((objEntries, key) => {
+    
     if (obj[key] !== undefined) {
       objEntries[key] = obj[key];
     }
