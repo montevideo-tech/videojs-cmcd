@@ -5,7 +5,7 @@ import { CmcdObject } from './cmcdKeys/cmcdObject';
 import { CmcdSession } from './cmcdKeys/cmcdSession';
 import crypto from 'crypto';
 
-var isWaitingEvent = true; 
+let isWaitingEvent = true;
 
 // Default options for the plugin.
 const defaults = {};
@@ -41,8 +41,7 @@ class Cmcd {
 
       handleEvents(player);
 
-      this.tech(true).vhs.xhr.beforeRequest = function(opts) { 
-        
+      this.tech(true).vhs.xhr.beforeRequest = function(opts) {
         const keyRequest = cmcdRequest.getKeys(opts.uri, isWaitingEvent);
         const keyObject = cmcdObject.getKeys(opts.uri);
         const keySession = cmcdSession.getKeys(player.currentSrc());
@@ -89,7 +88,7 @@ function handleEvents(player) {
   });
   
   // all it's okey
-  player.on('playing', function() { 
+  player.on('canplay', function() { 
     isWaitingEvent = false;
   });
 }

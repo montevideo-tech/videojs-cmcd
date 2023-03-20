@@ -63,20 +63,20 @@ export class CmcdRequest {
 
   getNextObjectRequest(actualURIrequest) {
     try {
-      let nextObject = undefined;
+      let nextObject;
 
-      if (this.player.duration().toString() !== 'Infinity' && this.player.duration() !== 0) {  
+      if (this.player.duration().toString() !== 'Infinity' && this.player.duration() !== 0) {
         // This logic doesnt work when is live video
         const segments = this.vhs.playlists.media().segments;
         const segmentIndexFind = segments.findIndex(seg => seg.resolvedUri === actualURIrequest);
+
         if (segmentIndexFind !== -1 && segmentIndexFind !== segments.length) {
-          nextObject = segments[segmentIndexFind+1].uri;
+          nextObject = segments[segmentIndexFind + 1].uri;
         }
       }
 
       return nextObject;
-    }
-    catch (e) {
+    } catch (e) {
       return undefined;
     }
   }
@@ -95,5 +95,5 @@ export class CmcdRequest {
       nrr: this.getNextRangeRequest(),
       su: isWaitingEvent
     }
-  }
+  };
 }
