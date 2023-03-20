@@ -81,12 +81,10 @@ function handleEvents(player) {
   player.on('loadedmetadata', function() {
     isWaitingEvent = false;
   });
-
   // seeking or buffer-empty event
   player.on('waiting', function() {
     isWaitingEvent = true;
-  });
-  
+  });  
   // all it's okey
   player.on('canplay', function() {
     isWaitingEvent = false;
