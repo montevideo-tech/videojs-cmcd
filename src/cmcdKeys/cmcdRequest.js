@@ -94,6 +94,6 @@ export class CmcdRequest {
       nor: this.getNextObjectRequest(actualURIrequest),
       nrr: this.getNextRangeRequest(),
       su: isWaitingEvent
-    }
-  };
+    };
+  }
 }

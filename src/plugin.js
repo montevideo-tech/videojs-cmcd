@@ -63,12 +63,12 @@ class Cmcd {
 function buildQueryString(obj) {
   let query = '';
   const sortedObj = Object.keys(obj).sort().reduce((objEntries, key) => {
-    
     if (obj[key] !== undefined) {
       objEntries[key] = obj[key];
     }
     return objEntries;
   }, {});
+
   console.log(sortedObj);
   for (const [key, value] of Object.entries(sortedObj)) {
     query += `${key}=${JSON.stringify(value)},`;
@@ -78,17 +78,17 @@ function buildQueryString(obj) {
 
 function handleEvents(player) {
   // startup
-  player.on('loadedmetadata', function() { 
+  player.on('loadedmetadata', function() {
     isWaitingEvent = false;
   });
 
   // seeking or buffer-empty event
-  player.on('waiting', function() { 
+  player.on('waiting', function() {
     isWaitingEvent = true;
   });
   
   // all it's okey
-  player.on('canplay', function() { 
+  player.on('canplay', function() {
     isWaitingEvent = false;
   });
 }
