@@ -51,7 +51,7 @@ export class CmcdObject {
 
       // Get the highest bitrate
       const highestBitrate = qualitylevels.reduce(function(prev, current) {
-        return (prev && prev.bitrate > current.bitrate) ?prev : current;
+        return (prev && prev.bitrate > current.bitrate) ? prev : current;
       });
 
       // Get the topBitrate, convert to kbps and round it
