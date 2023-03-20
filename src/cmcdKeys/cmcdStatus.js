@@ -17,6 +17,6 @@ export class CmcdStatus {
     return {
       bs: this.getBufferStarvation(),
       rtp: this.getRequestedMaximumThroughput()
-    }
-  };
+    };
+  }
 }

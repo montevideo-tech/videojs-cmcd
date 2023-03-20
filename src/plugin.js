@@ -58,7 +58,6 @@ class Cmcd {
 
 function buildQueryString(obj) {
   let query = '';
-
   const sortedObj = Object.keys(obj).sort().reduce((objEntries, key) => {
 
     if (obj[key] !== undefined) {
@@ -71,7 +70,7 @@ function buildQueryString(obj) {
     query += `${key}=${JSON.stringify(value)},`;
   }
   return encodeURIComponent(query.slice(0, -1));
-};
+}
 
 // Define default values for the plugin's `state` object here.
 // Cmcd.defaultState = {};

@@ -23,12 +23,12 @@ export class CmcdRequest {
       const bufferLengthMs = bufferLength * 1000;
 
       return bufferLengthMs;
-    } catch(e) {
+    } catch (e) {
       return undefined;
     }
   }
 
-  getBufferLength() { 
+  getBufferLength() {
     // This key SHOULD only be sent with an object type of ‘a’, ‘v’ or ‘av’.
     try {
       const bufferLengthMs = this.bufferLengthMs();
@@ -37,16 +37,16 @@ export class CmcdRequest {
     } catch (e) {
       return undefined;
     }
-    
   }
 
   getDeadline() {
     try {
       const bufferLength = this.bufferLengthMs();
-      const playbackRate = this.player.playbackRate()*1000;
+      const playbackRate = this.player.playbackRate() * 1000;
       const deadline = Math.round(bufferLength / playbackRate);
+
       return roundedToNearstHundredth(deadline);
-    } catch(e) {
+    } catch (e) {
       return undefined;
     }
   }
@@ -56,7 +56,7 @@ export class CmcdRequest {
       const bandwidth = Math.round(this.vhs.systemBandwidth / 1000);
 
       return roundedToNearstHundredth(bandwidth);
-    } catch(e) {
+    } catch (e) {
       return undefined;
     }
   }
@@ -74,7 +74,7 @@ export class CmcdRequest {
   getStartup() {
     // TODO
     return undefined;
-  }  
+  }
 
   getKeys() {
     return {
@@ -84,6 +84,6 @@ export class CmcdRequest {
       nor: this.getNextObjectRequest(),
       nrr: this.getNextRangeRequest(),
       su: this.getStartup()
-    }
-  };
+    };
+  }
 }

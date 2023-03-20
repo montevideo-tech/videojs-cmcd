@@ -50,8 +50,8 @@ export class CmcdObject {
       const qualitylevels = this.player.qualityLevels().levels_;
 
       // Get the highest bitrate
-      const highestBitrate = qualitylevels.reduce(function (prev, current) {
-        return (prev && prev.bitrate > current.bitrate)?prev : current;
+      const highestBitrate = qualitylevels.reduce(function(prev, current) {
+        return (prev && prev.bitrate > current.bitrate) ?prev : current;
       });
 
       // Get the topBitrate, convert to kbps and round it
@@ -71,6 +71,6 @@ export class CmcdObject {
       d: this.getObjectDuration(uriBeingRequested),
       ot: this.getObjectType(),
       tb: this.getTopBitrate()
-    }
-  };
+    };
+  }
 }
