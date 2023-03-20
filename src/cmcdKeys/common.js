@@ -7,3 +7,13 @@ export const roundedToNearstHundredth = (number) => {
   }
   return 100;
 };
+
+export const deletekeys = (cmcd) => {
+  if (cmcd.sf === undefined) {
+    delete cmcd.sf;
+  } 
+  if (cmcd.ot === undefined) {
+    delete cmcd.ot;
+  }
+  return cmcd;
+};

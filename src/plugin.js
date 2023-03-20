@@ -3,6 +3,7 @@ import { version as VERSION } from '../package.json';
 import { CmcdRequest } from './cmcdKeys/cmcdRequest';
 import { CmcdObject } from './cmcdKeys/cmcdObject';
 import { CmcdSession } from './cmcdKeys/cmcdSession';
+import {deletekeys} from './cmcdKeys/common';
 import crypto from 'crypto';
 
 let isWaitingEvent = true;
@@ -46,7 +47,7 @@ class Cmcd {
         const keyObject = cmcdObject.getKeys(opts.uri);
         const keySession = cmcdSession.getKeys(player.currentSrc());
 
-        const cmcdKeysObject = Object.assign({}, keyRequest, keyObject, keySession);
+        const cmcdKeysObject = deletekeys(Object.assign({}, keyRequest, keyObject, keySession));
 
         if (opts.uri.match(/\?./)) {
           opts.uri += `&CMCD=${buildQueryString(cmcdKeysObject)}`;
