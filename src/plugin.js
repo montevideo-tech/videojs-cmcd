@@ -3,8 +3,9 @@ import { version as VERSION } from '../package.json';
 import { CmcdRequest } from './cmcdKeys/cmcdRequest';
 import { CmcdObject } from './cmcdKeys/cmcdObject';
 import { CmcdSession } from './cmcdKeys/cmcdSession';
+import crypto from 'crypto';
 
-var isWaitingEvent = true; 
+let isWaitingEvent = true;
 
 // Default options for the plugin.
 const defaults = {};
@@ -40,8 +41,7 @@ class Cmcd {
 
       handleEvents(player);
 
-      this.tech(true).vhs.xhr.beforeRequest = function(opts) { 
-        
+      this.tech(true).vhs.xhr.beforeRequest = function(opts) {
         const keyRequest = cmcdRequest.getKeys(opts.uri, isWaitingEvent);
         const keyObject = cmcdObject.getKeys(opts.uri);
         const keySession = cmcdSession.getKeys(player.currentSrc());
@@ -62,34 +62,31 @@ class Cmcd {
 
 function buildQueryString(obj) {
   let query = '';
-
   const sortedObj = Object.keys(obj).sort().reduce((objEntries, key) => {
     if (obj[key] !== undefined) {
       objEntries[key] = obj[key];
     }
     return objEntries;
   }, {});
+
   console.log(sortedObj);
   for (const [key, value] of Object.entries(sortedObj)) {
     query += `${key}=${JSON.stringify(value)},`;
   }
- 
   return encodeURIComponent(query.slice(0, -1));
 }
 
 function handleEvents(player) {
   // startup
-  player.on('loadedmetadata', function() { 
+  player.on('loadedmetadata', function() {
     isWaitingEvent = false;
   });
-
   // seeking or buffer-empty event
-  player.on('waiting', function() { 
+  player.on('waiting', function() {
     isWaitingEvent = true;
   });
-  
   // all it's okey
-  player.on('playing', function() { 
+  player.on('canplay', function() {
     isWaitingEvent = false;
   });
 }

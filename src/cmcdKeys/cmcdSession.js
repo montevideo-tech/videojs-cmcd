@@ -62,9 +62,12 @@ export class CmcdSession {
 
   getStreamType() {
     try {
-      if (this.player.duration() === 'infinite') {
-        return 'v';
-      } return 'l';
+      // It is a live video
+      if (this.player.duration().toString() === 'Infinity' || this.player.duration() === 0) {
+        return 'l';
+      }
+      // else it is a vod video
+      return 'v';
     } catch (e) {
       return undefined;
     }
