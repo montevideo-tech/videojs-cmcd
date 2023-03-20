@@ -3,6 +3,7 @@ import { version as VERSION } from '../package.json';
 import { CmcdRequest } from './cmcdKeys/cmcdRequest';
 import { CmcdObject } from './cmcdKeys/cmcdObject';
 import { CmcdSession } from './cmcdKeys/cmcdSession';
+import crypto from "crypto"
 
 // Default options for the plugin.
 const defaults = {};
