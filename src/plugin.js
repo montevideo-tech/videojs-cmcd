@@ -3,7 +3,7 @@ import { version as VERSION } from '../package.json';
 import { CmcdRequest } from './cmcdKeys/cmcdRequest';
 import { CmcdObject } from './cmcdKeys/cmcdObject';
 import { CmcdSession } from './cmcdKeys/cmcdSession';
-import {deletekeys} from './cmcdKeys/common';
+import { deletekeys } from './cmcdKeys/common';
 import crypto from 'crypto';
 
 let isWaitingEvent = true;
@@ -42,7 +42,7 @@ class Cmcd {
 
       handleEvents(player);
 
-      this.tech(true).vhs.xhr.beforeRequest = function(opts) {
+      this.tech(true).vhs.xhr.beforeRequest = function (opts) {
         const keyRequest = cmcdRequest.getKeys(opts.uri, isWaitingEvent);
         const keyObject = cmcdObject.getKeys(opts.uri);
         const keySession = cmcdSession.getKeys(player.currentSrc());
@@ -72,22 +72,40 @@ function buildQueryString(obj) {
 
   console.log(sortedObj);
   for (const [key, value] of Object.entries(sortedObj)) {
-    query += `${key}=${JSON.stringify(value)},`;
+    if (key === 'v' && value === 1) {
+      continue;
+    }
+    if (key == 'pr' && value === 1) {
+      continue;
+    }
+    // Add condition of buffer length
+    // Add condition of buffer starvation
+
+    const type = typeof value;
+    if (key === 'ot' || key === 'sf' || key === 'st') {
+      query += `${key}=${value}`;
+    } else if (type === 'boolean' && value) {
+      query += key;
+    } else if (type === 'boolean' && !value) {
+      continue;
+    } else {
+      query += `${key}=${JSON.stringify(value)},`;
+    }
   }
   return encodeURIComponent(query.slice(0, -1));
 }
 
 function handleEvents(player) {
   // startup
-  player.on('loadedmetadata', function() {
+  player.on('loadedmetadata', function () {
     isWaitingEvent = false;
   });
   // seeking or buffer-empty event
-  player.on('waiting', function() {
+  player.on('waiting', function () {
     isWaitingEvent = true;
   });
   // all it's okey
-  player.on('canplay', function() {
+  player.on('canplay', function () {
     isWaitingEvent = false;
   });
 }
