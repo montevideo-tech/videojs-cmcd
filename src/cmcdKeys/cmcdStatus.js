@@ -4,12 +4,12 @@ export class CmcdStatus {
   }
 
   getBufferStarvation() {
-    //TODO
+    // TODO
     return undefined;
   }
 
   getRequestedMaximumThroughput() {
-    //TODO
+    // TODO
     return undefined;
   }
 
@@ -18,5 +18,5 @@ export class CmcdStatus {
       bs: this.getBufferStarvation(),
       rtp: this.getRequestedMaximumThroughput()
     }
-  }
+  };
 }

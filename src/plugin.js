@@ -36,7 +36,7 @@ class Cmcd {
       const cmcdObject = new CmcdObject(player);
       const cmcdSession = new CmcdSession(player, sid);
 
-      this.tech(true).vhs.xhr.beforeRequest = function(opts) { 
+      this.tech(true).vhs.xhr.beforeRequest = function(opts) {
         const keyRequest = cmcdRequest.getKeys();
         const keyObject = cmcdObject.getKeys(opts.uri);
         const keySession = cmcdSession.getKeys(player.currentSrc());
@@ -60,6 +60,7 @@ function buildQueryString(obj) {
   let query = '';
 
   const sortedObj = Object.keys(obj).sort().reduce((objEntries, key) => {
+
     if (obj[key] !== undefined) {
       objEntries[key] = obj[key];
     }
@@ -69,9 +70,8 @@ function buildQueryString(obj) {
   for (const [key, value] of Object.entries(sortedObj)) {
     query += `${key}=${JSON.stringify(value)},`;
   }
- 
   return encodeURIComponent(query.slice(0, -1));
-}
+};
 
 // Define default values for the plugin's `state` object here.
 // Cmcd.defaultState = {};
