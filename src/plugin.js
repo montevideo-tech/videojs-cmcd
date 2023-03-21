@@ -3,7 +3,7 @@ import { version as VERSION } from '../package.json';
 import { CmcdRequest } from './cmcdKeys/cmcdRequest';
 import { CmcdObject } from './cmcdKeys/cmcdObject';
 import { CmcdSession } from './cmcdKeys/cmcdSession';
-import { serializer } from './cmcdKeys/common';
+import { showBufferlengthKey } from './cmcdKeys/common';
 import crypto from 'crypto';
 
 let isWaitingEvent = true;
@@ -47,7 +47,7 @@ class Cmcd {
         const keyObject = cmcdObject.getKeys(opts.uri);
         const keySession = cmcdSession.getKeys(player.currentSrc());
 
-        const cmcdKeysObject = serializer(Object.assign({}, keyRequest, keyObject, keySession));
+        const cmcdKeysObject = Object.assign({}, keyRequest, keyObject, keySession);
 
         if (opts.uri.match(/\?./)) {
           opts.uri += `&CMCD=${buildQueryString(cmcdKeysObject)}`;
@@ -81,6 +81,9 @@ function buildQueryString(obj) {
       continue;
     }
     if (type ===  'boolean' && !value) {
+      continue;
+    }
+    if (key === 'bl' && !showBufferlengthKey(sortedObj)) {
       continue;
     }
   

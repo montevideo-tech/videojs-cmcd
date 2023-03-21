@@ -8,12 +8,11 @@ export const roundedToNearstHundredth = (number) => {
   return 100;
 };
 
-export const serializer = (cmcdObject) => {
+export const showBufferlengthKey = (cmcdObject) => {
   if (cmcdObject.ot !== undefined) {
     if (cmcdObject.ot === 'v' || cmcdObject.ot === 'a' || cmcdObject.ot === 'av') {
-      return cmcdObject;
+      return true;
     }
   }
-  delete cmcdObject.bl;
-  return cmcdObject;
+  return false;
 }
