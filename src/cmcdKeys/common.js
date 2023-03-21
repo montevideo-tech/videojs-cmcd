@@ -8,12 +8,12 @@ export const roundedToNearstHundredth = (number) => {
   return 100;
 };
 
-export const deletekeys = (cmcd) => {
-  if (cmcd.sf === undefined) {
-    delete cmcd.sf;
-  } 
-  if (cmcd.ot === undefined) {
-    delete cmcd.ot;
+export const serializer = (cmcdObject) => {
+  if (cmcdObject.ot !== undefined) {
+    if (cmcdObject.ot === 'v' || cmcdObject.ot === 'a' || cmcdObject.ot === 'av') {
+      return cmcdObject;
+    }
   }
-  return cmcd;
-};
+  delete cmcdObject.bl;
+  return cmcdObject;
+}
