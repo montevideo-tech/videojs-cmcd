@@ -3,11 +3,8 @@ import { version as VERSION } from '../package.json';
 import { CmcdRequest } from './cmcdKeys/cmcdRequest';
 import { CmcdObject } from './cmcdKeys/cmcdObject';
 import { CmcdSession } from './cmcdKeys/cmcdSession';
-<<<<<<< HEAD
 import { CmcdStatus } from './cmcdKeys/cmcdStatus';
-=======
 import { showBufferlengthKey } from './cmcdKeys/common';
->>>>>>> develop
 import crypto from 'crypto';
 
 let isWaitingEvent = true;
