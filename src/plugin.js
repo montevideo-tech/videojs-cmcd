@@ -5,7 +5,7 @@ import { CmcdObject } from './cmcdKeys/cmcdObject';
 import { CmcdSession } from './cmcdKeys/cmcdSession';
 import { CmcdStatus } from './cmcdKeys/cmcdStatus';
 import { showBufferlengthKey } from './cmcdKeys/common';
-import crypto from 'crypto';
+import { v4 as uuidv4 } from 'uuid';
 
 let isWaitingEvent = true;
 
@@ -32,7 +32,8 @@ class Cmcd {
   constructor(options) {
     this.options = videojs.obj.merge(defaults, options);
     const player = this;
-    const sid = crypto.randomUUID();
+    const sid = uuidv4();
+
 
     this.ready(() => {
       this.addClass('vjs-cmcd');
