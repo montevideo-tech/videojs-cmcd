@@ -37,7 +37,7 @@ This CMCD keys will not implemented for the first release:
 You can use npm to install a compiled version of the plugin and dependencies:
 
 ```sh
-npm install --save videojs-cmcd
+npm i @montevideo-tech/videojs-cmcd
 ```
 
 ## Usage
