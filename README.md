@@ -1,12 +1,44 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+    - [
+	
+	  
+  
+](#)
+- [videojs-cmcd](#videojs-cmcd)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [`<script>` Tag](#script-tag)
+    - [Browserify/CommonJS](#browserifycommonjs)
+    - [RequireJS/AMD](#requirejsamd)
+  - [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+<h3 align="left">
+	<b>
+	  <a href="https://montevideotech.dev/summer-camp-2023/"><img decoding="async" width="300"  src="https://montevideotech.dev/wp-content/uploads/2020/09/mvd-tech-02-1024x653.png" ></a><br>
+  </b>
+</h3>
+
 # videojs-cmcd
 
-Adds CMCD data to the player requests
+A [video.js][videojs] plugin for adding Common-Media-Client-Data (CMCD) to the player requests.
 
-## Table of Contents
+For more information about the CMCD keys implemented and how they are obtained read this documentation [https://github.com/montevideo-tech/videojs-cmcd/wiki/CMCD-key-values-information](here).
 
-<!-- START doctoc -->
-<!-- END doctoc -->
+Note: 
+This CMCD keys will not implemented for the first release:
+
+-Requested maximum throughput
+-Object type
+-Next range request
+
 ## Installation
+
+You can use npm to install a compiled version of the plugin and dependencies:
 
 ```sh
 npm install --save videojs-cmcd
@@ -61,7 +93,6 @@ require(['video.js', 'videojs-cmcd'], function(videojs) {
 
 ## License
 
-Apache-2.0. Copyright (c) Maximiliano Pollinger &lt;maximiliano@qualabs.com&gt;
-
+Apache-2.0. Copyright (c)
 
 [videojs]: http://videojs.com/
