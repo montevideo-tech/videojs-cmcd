@@ -1,12 +1,12 @@
+<h3 align="right">
+	<b>
+	  <a href="https://montevideotech.dev/summer-camp-2023/"><img decoding="async" width="300"  src="https://montevideotech.dev/wp-content/uploads/2020/09/mvd-tech-02-1024x653.png" ></a><br>
+  </b>
+</h3>
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
-    - [
-	
-	  
-  
-](#)
 - [videojs-cmcd](#videojs-cmcd)
   - [Installation](#installation)
   - [Usage](#usage)
@@ -16,12 +16,6 @@
   - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<h3 align="left">
-	<b>
-	  <a href="https://montevideotech.dev/summer-camp-2023/"><img decoding="async" width="300"  src="https://montevideotech.dev/wp-content/uploads/2020/09/mvd-tech-02-1024x653.png" ></a><br>
-  </b>
-</h3>
 
 # videojs-cmcd
 
