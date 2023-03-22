@@ -7,3 +7,12 @@ export const roundedToNearstHundredth = (number) => {
   }
   return 100;
 };
+
+export const showBufferlengthKey = (cmcdObject) => {
+  if (cmcdObject.ot !== undefined) {
+    if (cmcdObject.ot === 'v' || cmcdObject.ot === 'a' || cmcdObject.ot === 'av') {
+      return true;
+    }
+  }
+  return false;
+}
