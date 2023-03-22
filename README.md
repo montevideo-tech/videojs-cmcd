@@ -23,7 +23,7 @@
 
 A [video.js][videojs] plugin for adding Common-Media-Client-Data (CMCD) to the player requests.
 
-For more information about the CMCD keys implemented and how they are obtained read this documentation [https://github.com/montevideo-tech/videojs-cmcd/wiki/CMCD-key-values-information](here).
+For more information about the CMCD keys implemented and how they are obtained read this documentation [here][wiki].
 
 Note: 
 This CMCD keys will not implemented for the first release:
@@ -92,3 +92,4 @@ require(['video.js', 'videojs-cmcd'], function(videojs) {
 Apache-2.0. Copyright (c)
 
 [videojs]: http://videojs.com/
+[wiki]: https://github.com/montevideo-tech/videojs-cmcd/wiki/CMCD-key-values-information
