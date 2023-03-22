@@ -3,8 +3,9 @@ import { version as VERSION } from '../package.json';
 import { CmcdRequest } from './cmcdKeys/cmcdRequest';
 import { CmcdObject } from './cmcdKeys/cmcdObject';
 import { CmcdSession } from './cmcdKeys/cmcdSession';
+import { CmcdStatus } from './cmcdKeys/cmcdStatus';
 import { showBufferlengthKey } from './cmcdKeys/common';
-import crypto from 'crypto';
+import { v4 as uuidv4 } from 'uuid';
 
 let isWaitingEvent = true;
 
@@ -31,7 +32,7 @@ class Cmcd {
   constructor(options) {
     this.options = videojs.obj.merge(defaults, options);
     const player = this;
-    const sid = crypto.randomUUID();
+    const sid = uuidv4();
 
     this.ready(() => {
       this.addClass('vjs-cmcd');
@@ -39,15 +40,17 @@ class Cmcd {
       const cmcdRequest = new CmcdRequest(player);
       const cmcdObject = new CmcdObject(player);
       const cmcdSession = new CmcdSession(player, sid);
+      const cmcdStatus = new CmcdStatus(player);
 
       handleEvents(player);
 
-      this.tech(true).vhs.xhr.beforeRequest = function (opts) {
+      this.tech(true).vhs.xhr.beforeRequest = function(opts) {
         const keyRequest = cmcdRequest.getKeys(opts.uri, isWaitingEvent);
         const keyObject = cmcdObject.getKeys(opts.uri);
         const keySession = cmcdSession.getKeys(player.currentSrc());
+        const keyStatus = cmcdStatus.getKeys(isWaitingEvent);
 
-        const cmcdKeysObject = Object.assign({}, keyRequest, keyObject, keySession);
+        const cmcdKeysObject = Object.assign({}, keyRequest, keyObject, keySession, keyStatus);
 
         if (opts.uri.match(/\?./)) {
           opts.uri += `&CMCD=${buildQueryString(cmcdKeysObject)}`;
@@ -70,7 +73,6 @@ function buildQueryString(obj) {
     return objEntries;
   }, {});
 
-  console.log(sortedObj);
   for (const [key, value] of Object.entries(sortedObj)) {
     const type = typeof value;
 
@@ -80,13 +82,12 @@ function buildQueryString(obj) {
     if (key === 'pr' && value === 1) {
       continue;
     }
-    if (type ===  'boolean' && !value) {
+    if (type === 'boolean' && !value) {
       continue;
     }
     if (key === 'bl' && !showBufferlengthKey(sortedObj)) {
       continue;
     }
-  
     // Add condition of buffer length
     // Add condition of buffer starvation
 
@@ -103,15 +104,15 @@ function buildQueryString(obj) {
 
 function handleEvents(player) {
   // startup
-  player.on('loadedmetadata', function () {
+  player.on('loadedmetadata', function() {
     isWaitingEvent = false;
   });
   // seeking or buffer-empty event
-  player.on('waiting', function () {
+  player.on('waiting', function() {
     isWaitingEvent = true;
   });
   // all it's okey
-  player.on('canplay', function () {
+  player.on('canplay', function() {
     isWaitingEvent = false;
   });
 }

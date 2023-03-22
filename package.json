@@ -1,7 +1,10 @@
 {
-  "name": "videojs-cmcd",
-  "version": "0.0.0",
+  "name": "@montevideo-tech/videojs-cmcd",
+  "version": "0.1.1",
   "description": "Adds CMCD data to the player requests",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/videojs-cmcd.cjs.js",
   "module": "dist/videojs-cmcd.es.js",
   "browser": "dist/videojs-cmcd.js",
@@ -37,7 +40,7 @@
     "videojs",
     "videojs-plugin"
   ],
-  "author": "Maximiliano Pollinger <maximiliano@qualabs.com>",
+  "author": "Montevideo Tech", 
   "license": "Apache-2.0",
   "vjsstandard": {
     "ignore": [
@@ -71,6 +74,7 @@
   },
   "dependencies": {
     "global": "^4.4.0",
+    "uuid": "^9.0.0",
     "video.js": "^8.2.0"
   },
   "devDependencies": {
