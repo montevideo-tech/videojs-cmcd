@@ -34,6 +34,7 @@ class Cmcd {
     const player = this;
     const sid = uuidv4();
 
+
     this.ready(() => {
       this.addClass('vjs-cmcd');
 
