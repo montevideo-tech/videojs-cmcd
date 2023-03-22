@@ -34,7 +34,6 @@ class Cmcd {
     const player = this;
     const sid = uuidv4();
 
-
     this.ready(() => {
       this.addClass('vjs-cmcd');
 
@@ -89,7 +88,6 @@ function buildQueryString(obj) {
     if (key === 'bl' && !showBufferlengthKey(sortedObj)) {
       continue;
     }
-
     // Add condition of buffer length
     // Add condition of buffer starvation
 
