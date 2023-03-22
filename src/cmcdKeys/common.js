@@ -15,4 +15,4 @@ export const showBufferlengthKey = (cmcdObject) => {
     }
   }
   return false;
-}
+};
