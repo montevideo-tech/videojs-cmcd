@@ -2,6 +2,9 @@
   "name": "@montevideo-tech/videojs-cmcd",
   "version": "0.1.0",
   "description": "Adds CMCD data to the player requests",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/videojs-cmcd.cjs.js",
   "module": "dist/videojs-cmcd.es.js",
   "browser": "dist/videojs-cmcd.js",
