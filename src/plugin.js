@@ -42,7 +42,7 @@ class Cmcd {
 
       handleEvents(player);
 
-      this.tech(true).vhs.xhr.beforeRequest = function (opts) {
+      this.tech(true).vhs.xhr.beforeRequest = function(opts) {
         const keyRequest = cmcdRequest.getKeys(opts.uri, isWaitingEvent);
         const keyObject = cmcdObject.getKeys(opts.uri);
         const keySession = cmcdSession.getKeys(player.currentSrc());
@@ -70,7 +70,6 @@ function buildQueryString(obj) {
     return objEntries;
   }, {});
 
-  console.log(sortedObj);
   for (const [key, value] of Object.entries(sortedObj)) {
     const type = typeof value;
 
@@ -80,13 +79,13 @@ function buildQueryString(obj) {
     if (key === 'pr' && value === 1) {
       continue;
     }
-    if (type ===  'boolean' && !value) {
+    if (type === 'boolean' && !value) {
       continue;
     }
     if (key === 'bl' && !showBufferlengthKey(sortedObj)) {
       continue;
     }
-  
+
     // Add condition of buffer length
     // Add condition of buffer starvation
 
@@ -103,15 +102,15 @@ function buildQueryString(obj) {
 
 function handleEvents(player) {
   // startup
-  player.on('loadedmetadata', function () {
+  player.on('loadedmetadata', function() {
     isWaitingEvent = false;
   });
   // seeking or buffer-empty event
-  player.on('waiting', function () {
+  player.on('waiting', function() {
     isWaitingEvent = true;
   });
   // all it's okey
-  player.on('canplay', function () {
+  player.on('canplay', function() {
     isWaitingEvent = false;
   });
 }
