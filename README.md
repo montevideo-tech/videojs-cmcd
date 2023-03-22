@@ -6,7 +6,9 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+# Videojs-CMCD Plugin
 
+## Table of contents
 - [videojs-cmcd](#videojs-cmcd)
   - [Installation](#installation)
   - [Usage](#usage)
@@ -17,7 +19,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# videojs-cmcd
+## videojs-cmcd
 
 A [video.js][videojs] plugin for adding Common-Media-Client-Data (CMCD) to the player requests.
 
@@ -26,9 +28,9 @@ For more information about the CMCD keys implemented and how they are obtained r
 Note: 
 This CMCD keys will not implemented for the first release:
 
--Requested maximum throughput
--Object type
--Next range request
+- Requested maximum throughput
+- Object type
+- Next range request
 
 ## Installation
 
