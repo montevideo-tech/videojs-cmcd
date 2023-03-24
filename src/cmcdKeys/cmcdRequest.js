@@ -72,6 +72,7 @@ export class CmcdRequest {
 
         if (segmentIndexFind !== -1 && segmentIndexFind !== segments.length) {
           nextObject = segments[segmentIndexFind + 1].uri;
+          nextObject = encodeURIComponent(nextObject);
         }
       }
 
