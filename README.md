@@ -22,10 +22,10 @@
 
 A [video.js][videojs] plugin for adding Common-Media-Client-Data (CMCD) to the player requests.
 
-For more information about the CMCD keys implemented and how they are obtained read this documentation [here][wiki].
+For more information about the CMCD keys implemented and how are they obtained read this documentation [here][wiki].
 
 Note: 
-This CMCD keys will not implemented for the first release:
+This CMCD keys will not be implemented for the first release:
 
 - Requested maximum throughput
 - Object type
@@ -45,7 +45,7 @@ To include videojs-cmcd on your website or web application, use any of the follo
 
 ### `<script>` Tag
 
-This is the simplest case. Get the script in whatever way you prefer and include the plugin _after_ you include [video.js][videojs], so that the `videojs` global is available.
+This is the simplest case. Get the script in whichever way you prefer and include the plugin _after_ you include [video.js][videojs], so that the `videojs` global is available.
 
 ```html
 <script src="//path/to/video.min.js"></script>
@@ -76,7 +76,7 @@ player.cmcd();
 
 ### RequireJS/AMD
 
-When using with RequireJS (or another AMD library), get the script in whatever way you prefer and `require` the plugin as you normally would:
+When using with RequireJS (or another AMD library), get the script in whichever way you prefer and `require` the plugin as you normally would:
 
 ```js
 require(['video.js', 'videojs-cmcd'], function(videojs) {
