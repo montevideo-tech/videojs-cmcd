@@ -28,7 +28,6 @@ Note:
 This CMCD keys will not be implemented for the first release:
 
 - Requested maximum throughput
-- Object type
 - Next range request
 
 ## Installation
