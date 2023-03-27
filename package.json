@@ -40,7 +40,7 @@
     "videojs",
     "videojs-plugin"
   ],
-  "author": "Montevideo Tech", 
+  "author": "Montevideo Tech",
   "license": "Apache-2.0",
   "vjsstandard": {
     "ignore": [
@@ -73,6 +73,7 @@
     "README.md": "doctoc --notitle"
   },
   "dependencies": {
+    "@montevideo-tech/cmcd-validator": "^0.3.1",
     "global": "^4.4.0",
     "uuid": "^9.0.0",
     "video.js": "^8.2.0"

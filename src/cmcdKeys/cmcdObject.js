@@ -6,10 +6,8 @@ export class CmcdObject {
   getEncodedBitrate() {
     try {
 
-      // Get the bandwidth of the current quality
       const bandwidth = this.player.tech(true).vhs.playlists.media_.attributes.BANDWIDTH;
 
-      // Get the encodedBitrate by converting the bandwidth to kbps and rounding it to an Int
       const encodedBitrate = Math.round(bandwidth / 1000);
 
       return encodedBitrate;
@@ -21,13 +19,10 @@ export class CmcdObject {
   getObjectDuration(uriBeingRequested) {
     try {
 
-      // Get the current playlist
       const playlist = this.player.tech(true).vhs.playlists.media();
 
-      // Get the current segment index
       const currentSegmentIndex = playlist.segments.findIndex(segment => segment.resolvedUri === uriBeingRequested);
 
-      // Get the duration of the current segment, convert it to ms and round it to an int
       const currentSegmentDuration = Math.round(playlist.segments[currentSegmentIndex].duration * 1000);
 
       return currentSegmentDuration;
@@ -38,23 +33,70 @@ export class CmcdObject {
 
   }
 
-  getObjectType() {
-    // TODO
-    return undefined;
+  getObjectType(uriBeingRequested) {
+    try {
+
+      const extension = uriBeingRequested.split('.').pop();
+
+      const supportedExtensions = {
+        // Manifest or playlist
+        m3u8: 'm',
+        mpd: 'm',
+        xml: 'm',
+        // Audio Only
+        m4a: 'a',
+        amp3ac: 'a',
+        aac: 'a',
+        caf: 'a',
+        flac: 'a',
+        oga: 'a',
+        wav: 'a',
+        // Video Only
+        opus: 'v',
+        ogv: 'v',
+        mp4: 'v',
+        mov: 'v',
+        m4v: 'v',
+        mkv: 'v',
+        webm: 'v',
+        ogg: 'v',
+        flv: 'v',
+        // Muxed audio and video
+        ts: 'av',
+        // Init segment not implemented
+        // Caption
+        webvtt: 'c',
+        vtt: 'c',
+        // ISOBMFF timed text track not implemented
+        // Cryptographic key, license or certificate not implemented
+        // Other
+        jpg: 'o',
+        jpeg: 'o',
+        gif: 'o',
+        png: 'o',
+        svg: 'o',
+        webp: 'o'
+      };
+
+      if (supportedExtensions.hasOwnProperty(extension)) {
+        return supportedExtensions[extension];
+      }
+      return undefined;
+
+    } catch (error) {
+      return undefined;
+    }
   }
 
   getTopBitrate() {
     try {
 
-      // Get the list of available quality levels
       const qualitylevels = this.player.qualityLevels().levels_;
 
-      // Get the highest bitrate
       const highestBitrate = qualitylevels.reduce(function(prev, current) {
         return (prev && prev.bitrate > current.bitrate) ? prev : current;
       });
 
-      // Get the topBitrate, convert to kbps and round it
       const topBitrate = Math.round(highestBitrate.bitrate / 1000);
 
       return topBitrate;
@@ -69,7 +111,7 @@ export class CmcdObject {
     return {
       br: this.getEncodedBitrate(),
       d: this.getObjectDuration(uriBeingRequested),
-      ot: this.getObjectType(),
+      ot: this.getObjectType(uriBeingRequested),
       tb: this.getTopBitrate()
     };
   }
