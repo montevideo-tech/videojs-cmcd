@@ -6,7 +6,6 @@ import { CmcdSession } from './cmcdKeys/cmcdSession';
 import { CmcdStatus } from './cmcdKeys/cmcdStatus';
 import { showBufferlengthKey } from './cmcdKeys/common';
 import { v4 as uuidv4 } from 'uuid';
-import { CMCDQueryValidator } from "@montevideo-tech/cmcd-validator";
 
 let isWaitingEvent = true;
 
@@ -58,9 +57,6 @@ class Cmcd {
         } else {
           opts.uri += `?CMCD=${buildQueryString(cmcdKeysObject)}`;
         }
-        console.log(opts.uri)
-        const cmcdQueryString = CMCDQueryValidator(opts.uri);
-        console.log(cmcdQueryString);
         return opts;
       };
 
