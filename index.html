@@ -9,12 +9,9 @@
 </head>
 
 <body>
-  <video id="videojs-cmcd-player" class="video-js vjs-default-skin" controls>
-    <source src="https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" 
-    type="application/x-mpegURL">
-  </video>
+  <video id="videojs-cmcd-player" class="video-js vjs-default-skin" controls></video>
   <select id="video-selector">
-    <option value= "0" > Big Buck Bunny (HLS) </option>
+    <option value= "0" >Big Buck Bunny (HLS) </option>
     <option value= "1" >Dolby VOD (HLS) </option>
     <option value= "2" >Live Akamai (HLS) </option>
     <option value= "3" >Big Buck Bunny (Dash) </option>  
@@ -53,7 +50,6 @@
         const selectedValue = event.target.value;
 
         examplePlayer.src(list[selectedValue]);
-        examplePlayer.cmcd();
       });
     }(window, window.videojs));
   </script>
