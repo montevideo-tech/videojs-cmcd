@@ -5,7 +5,6 @@ import { CmcdObject } from './cmcdKeys/cmcdObject';
 import { CmcdSession } from './cmcdKeys/cmcdSession';
 import { CmcdStatus } from './cmcdKeys/cmcdStatus';
 import { showBufferlengthKey } from './cmcdKeys/common';
-import { v4 as uuidv4 } from 'uuid';
 
 let isWaitingEvent = true;
 
@@ -32,38 +31,52 @@ class Cmcd {
   constructor(options) {
     this.options = videojs.obj.merge(defaults, options);
     const player = this;
-    const sid = uuidv4();
+    const sid = generateUuid();
 
     this.ready(() => {
       this.addClass('vjs-cmcd');
 
-      const cmcdRequest = new CmcdRequest(player);
-      const cmcdObject = new CmcdObject(player);
-      const cmcdSession = new CmcdSession(player, sid);
-      const cmcdStatus = new CmcdStatus(player);
-
       handleEvents(player);
 
-      this.tech(true).vhs.xhr.beforeRequest = function(opts) {
-        const keyRequest = cmcdRequest.getKeys(opts.uri, isWaitingEvent);
-        const keyObject = cmcdObject.getKeys(opts.uri);
-        const keySession = cmcdSession.getKeys(player.currentSrc());
-        const keyStatus = cmcdStatus.getKeys(isWaitingEvent);
+      if (this.tech(true).vhs) {
 
-        const cmcdKeysObject = Object.assign({}, keyRequest, keyObject, keySession, keyStatus);
+        beforeRequestFunc(player, sid, this);
 
-        if (opts.uri.match(/\?./)) {
-          opts.uri += `&CMCD=${buildQueryString(cmcdKeysObject)}`;
-        } else {
-          opts.uri += `?CMCD=${buildQueryString(cmcdKeysObject)}`;
-        }
-        return opts;
-      };
+      } else {
+        this.on('loadstart', () => {
 
+          beforeRequestFunc(player, sid, this);
+
+        });
+      }
     });
+
   }
 }
+function beforeRequestFunc(player, sid, self) {
+  self.tech(true).vhs.xhr.beforeRequest = function(opts) {
 
+    const cmcdRequest = new CmcdRequest(player);
+    const cmcdObject = new CmcdObject(player);
+    const cmcdSession = new CmcdSession(player, sid);
+    const cmcdStatus = new CmcdStatus(player);
+
+    const keyRequest = cmcdRequest.getKeys(opts.uri, isWaitingEvent);
+    const keyObject = cmcdObject.getKeys(opts.uri);
+    const keySession = cmcdSession.getKeys(player.currentSrc());
+    const keyStatus = cmcdStatus.getKeys(isWaitingEvent);
+    const cmcdKeysObject = Object.assign({}, keyRequest, keyObject, keySession, keyStatus);
+
+    if (opts.uri.match(/\?./)) {
+      opts.uri += `&CMCD=${buildQueryString(cmcdKeysObject)}`;
+
+    } else {
+
+      opts.uri += `?CMCD=${buildQueryString(cmcdKeysObject)}`;
+    }
+    return opts;
+  };
+}
 function buildQueryString(obj) {
   let query = '';
   const sortedObj = Object.keys(obj).sort().reduce((objEntries, key) => {
@@ -102,6 +115,26 @@ function buildQueryString(obj) {
   return encodeURIComponent(query.slice(0, -1));
 }
 
+function generateUuid() {
+  const uuid = new Uint8Array(16);
+
+  for (let i = 0; i < uuid.length; i++) {
+    uuid[i] = Math.floor(Math.random() * 256);
+  }
+
+  // Set the version number to 4
+  uuid[6] = (uuid[6] & 0x0f) | 0x40;
+
+  // Set the variant number to 2
+  uuid[8] = (uuid[8] & 0x3f) | 0x80;
+
+  // Convert the UUID to a string in the canonical format
+  const hexDigits = Array.from(uuid, byte => byte.toString(16).padStart(2, '0'));
+  const hexString = hexDigits.join('');
+
+  return `${hexString.slice(0, 8)}-${hexString.slice(8, 12)}-4${hexString.slice(13, 16)}-${String.fromCharCode((uuid[8] & 0x0f) | 0x80)}${hexString.slice(17, 20)}-${hexString.slice(20)}`;
+}
+
 function handleEvents(player) {
   // startup
   player.on('loadedmetadata', function() {
@@ -118,7 +151,7 @@ function handleEvents(player) {
 }
 
 // Define default values for the plugin's `state` object here.
-// Cmcd.defaultState = {};
+Cmcd.defaultState = {};
 
 // Include the version number.
 Cmcd.VERSION = VERSION;
