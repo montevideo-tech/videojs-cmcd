@@ -1,4 +1,4 @@
-<h3 align="right">
+<h3 align="left">
 	<b>
 	  <a href="https://montevideotech.dev/summer-camp-2023/"><img decoding="async" width="300"  src="https://montevideotech.dev/wp-content/uploads/2020/09/mvd-tech-02-1024x653.png" ></a><br>
   </b>
@@ -32,7 +32,7 @@ This CMCD keys will not be implemented for the first release:
 
 ## Installation
 
-You can use npm to install a compiled version of the plugin and dependencies:
+Instal the plugin and dependencies:
 
 ```sh
 npm i @montevideo-tech/videojs-cmcd
@@ -41,6 +41,19 @@ npm i @montevideo-tech/videojs-cmcd
 ## Usage
 
 To include videojs-cmcd on your website or web application, use any of the following methods.
+
+Install videojs-cmcd via npm and `import` the plugin as you would any other module, then instance the player with cmcd().
+
+```js
+import  '@montevideo-tech/videojs-cmcd'
+
+const player = playerRef.current = videojs(videoElement, options, () => {
+    videojs.log('player is ready');
+    onReady && onReady(player);
+});
+
+player.cmcd();
+```
 
 ### `<script>` Tag
 
