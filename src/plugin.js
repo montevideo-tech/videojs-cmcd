@@ -54,8 +54,10 @@ class Cmcd {
   }
 }
 function beforeRequestFunc(player, sid, self) {
-  self.tech(true).vhs.xhr.beforeRequest = function(opts) {
+  // Save original beforeRequest function
+  const obr = self.tech(true).vhs.xhr.beforeRequest;
 
+  self.tech(true).vhs.xhr.beforeRequest = function(opts) {
     const cmcdRequest = new CmcdRequest(player);
     const cmcdObject = new CmcdObject(player);
     const cmcdSession = new CmcdSession(player, sid);
@@ -73,6 +75,10 @@ function beforeRequestFunc(player, sid, self) {
     } else {
 
       opts.uri += `?CMCD=${buildQueryString(cmcdKeysObject)}`;
+    }
+    // Use original beforeRequest funciton to (chain it)
+    if (obr) {
+      obr(opts);
     }
     return opts;
   };

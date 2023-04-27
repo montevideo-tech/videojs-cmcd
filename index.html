@@ -20,12 +20,25 @@
     <li><a href="/test/debug.html">Run unit tests in browser.</a></li>
     <li><a href="docs/api/">Read generated docs.</a></li>
   </ul>
+  <script src='https://cdn.jsdelivr.net/npm/@montevideo-tech/cmcd-validator@latest/dist/cmcd-validator.umd.js'></script>
   <script src="node_modules/video.js/dist/video.js"></script>
   <script src="dist/videojs-cmcd.js"></script>
   <script>
     (function(window, videojs) {
-      var examplePlayer = window.examplePlayer = videojs('videojs-cmcd-player');
-      var cmcd = window.cmcd = examplePlayer.cmcd();
+
+      // Init player and plguin
+      var player = window.player = videojs('videojs-cmcd-player');
+      var cmcd = window.cmcd = player.cmcd();
+
+      // Add CMCDValidator (open the browser console to see the logs)
+      player.on('loadstart', function() {
+        var obr = player.tech().vhs.xhr.beforeRequest
+        player.tech().vhs.xhr.beforeRequest = function(options) {
+          if (obr) obr(options)
+          console.log(window['cmcd-validator-debug'].CMCDQueryValidator(options.uri))
+          return options;
+        };
+      })
 
       const videoSelector = window.document.getElementById('video-selector');
       videoSelector.addEventListener('change', (event) => {
@@ -48,8 +61,7 @@
           }
         ];
         const selectedValue = event.target.value;
-
-        examplePlayer.src(list[selectedValue]);
+        player.src(list[selectedValue]);
       });
     }(window, window.videojs));
   </script>
