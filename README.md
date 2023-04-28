@@ -18,18 +18,14 @@
 
 A [video.js][videojs] plugin for adding Common-Media-Client-Data (CMCD) to the player requests.
 
-For more information about the CMCD keys implemented and how are they obtained read this documentation [here][wiki].
-
-Note: 
-
 ## Content
-  - [Installation and Usage](#installation-and-usage)
-    - [Vanilla Javascript](#vanilla-javascript)
-    - [NPM](#npm)
-  - [CMCD Standard implementation status](#cmcd-standard-implementation-status)
-  - [Contributing](#contributing)
-    - [Setup your development environment](#setup-your-development-environment)
-  - [License](#license)
+- [Installation and Usage](#installation-and-usage)
+  - [Vanilla Javascript](#vanilla-javascript)
+  - [NPM](#npm)
+- [CMCD Standard implementation status](#cmcd-standard-implementation-status)
+- [Contributing](#contributing)
+  - [Setup your development environment](#setup-your-development-environment)
+- [License](#license)
 
 
 ## Installation and Usage
