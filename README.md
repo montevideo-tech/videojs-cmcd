@@ -23,8 +23,6 @@ For more information about the CMCD keys implemented and how are they obtained r
 Note: 
 
 ## Content
-- [videojs-cmcd](#videojs-cmcd)
-  - [Content](#content)
   - [Installation and Usage](#installation-and-usage)
     - [Vanilla Javascript](#vanilla-javascript)
     - [NPM](#npm)

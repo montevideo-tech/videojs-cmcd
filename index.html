@@ -20,7 +20,7 @@
     <li><a href="/test/debug.html">Run unit tests in browser.</a></li>
     <li><a href="docs/api/">Read generated docs.</a></li>
   </ul>
-  <script src='https://cdn.jsdelivr.net/npm/@montevideo-tech/cmcd-validator@latest/dist/cmcd-validator.umd.js'></script>
+  <script src='https://cdn.jsdelivr.net/npm/@montevideo-tech/cmcd-validator@latest/dist/cmcd-validator.min.js'></script>
   <script src="node_modules/video.js/dist/video.js"></script>
   <script src="dist/videojs-cmcd.js"></script>
   <script>
@@ -35,7 +35,7 @@
         var obr = player.tech().vhs.xhr.beforeRequest
         player.tech().vhs.xhr.beforeRequest = function(options) {
           if (obr) obr(options)
-          console.log(window['cmcd-validator-debug'].CMCDQueryValidator(options.uri))
+          console.log(window.CMCDValidator.CMCDQueryValidator(options.uri))
           return options;
         };
       })
