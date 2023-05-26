@@ -1,5 +1,5 @@
 import videojs from 'video.js';
-import { version as VERSION } from '../package.json';
+import {version as VERSION} from '../package.json';
 import { CmcdRequest } from './cmcdKeys/cmcdRequest';
 import { CmcdObject } from './cmcdKeys/cmcdObject';
 import { CmcdSession } from './cmcdKeys/cmcdSession';
@@ -23,6 +23,9 @@ class Cmcd extends Plugin {
   /**
    * Create a Cmcd plugin instance.
    *
+   * @param  {Player} player
+   *         A Video.js Player instance.
+   *
    * @param  {Object} [options]
    *         An optional options object.
    *
@@ -31,37 +34,37 @@ class Cmcd extends Plugin {
    *         from your plugin's caller.
    */
   constructor(player, options) {
+    // the parent class will add player under this.player
     super(player);
     this.options = videojs.obj.merge(defaults, options);
 
     const sid = generateUuid();
 
-    this.ready(() => {
-      this.addClass('vjs-cmcd');
+    this.player.ready(() => {
+      player.addClass('vjs-cmcd');
 
       handleEvents(player);
 
-      if (this.tech(true).vhs) {
+      if (this.player.tech(true).vhs) {
 
-        beforeRequestFunc(player, sid, this);
+        beforeRequestFunc(this.player, sid);
 
       } else {
-        this.on('loadstart', () => {
+        this.player.on('loadstart', () => {
 
-          beforeRequestFunc(player, sid, this);
+          beforeRequestFunc(this.player, sid);
 
         });
       }
     });
-
   }
 }
 
-function beforeRequestFunc(player, sid, self) {
+function beforeRequestFunc(player, sid) {
   // Save original beforeRequest function
-  const obr = self.tech(true).vhs.xhr.beforeRequest;
+  const obr = player.tech(true).vhs.xhr.beforeRequest;
 
-  self.tech(true).vhs.xhr.beforeRequest = function(opts) {
+  player.tech(true).vhs.xhr.beforeRequest = function(opts) {
     const cmcdRequest = new CmcdRequest(player);
     const cmcdObject = new CmcdObject(player);
     const cmcdSession = new CmcdSession(player, sid);
