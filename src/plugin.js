@@ -6,6 +6,8 @@ import { CmcdSession } from './cmcdKeys/cmcdSession';
 import { CmcdStatus } from './cmcdKeys/cmcdStatus';
 import { showBufferlengthKey } from './cmcdKeys/common';
 
+const Plugin = videojs.getPlugin('plugin');
+
 let isWaitingEvent = true;
 
 // Default options for the plugin.
@@ -16,7 +18,7 @@ const defaults = {};
  *
  * See: https://blog.videojs.com/feature-spotlight-advanced-plugins/
  */
-class Cmcd {
+class Cmcd extends Plugin {
 
   /**
    * Create a Cmcd plugin instance.
@@ -28,9 +30,10 @@ class Cmcd {
    *         second argument of options is a convenient way to accept inputs
    *         from your plugin's caller.
    */
-  constructor(options) {
+  constructor(player, options) {
+    super(player);
     this.options = videojs.obj.merge(defaults, options);
-    const player = this;
+
     const sid = generateUuid();
 
     this.ready(() => {
@@ -53,6 +56,7 @@ class Cmcd {
 
   }
 }
+
 function beforeRequestFunc(player, sid, self) {
   // Save original beforeRequest function
   const obr = self.tech(true).vhs.xhr.beforeRequest;

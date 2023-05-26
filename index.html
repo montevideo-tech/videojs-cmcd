@@ -28,7 +28,7 @@
 
       // Init player and plguin
       var player = window.player = videojs('videojs-cmcd-player');
-      var cmcd = window.cmcd = player.cmcd();
+      var cmcd = window.cmcd = player.cmcd({});
 
       // Add CMCDValidator (open the browser console to see the logs)
       player.on('loadstart', function() {
