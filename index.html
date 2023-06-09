@@ -28,7 +28,7 @@
 
       // Init player and plguin
       var player = window.player = videojs('videojs-cmcd-player');
-      var cmcd = window.cmcd = player.cmcd();
+      var cmcd = window.cmcd = player.cmcd({sid: 'SesssionID'});
 
       // Add CMCDValidator (open the browser console to see the logs)
       player.on('loadstart', function() {
@@ -62,6 +62,7 @@
         ];
         const selectedValue = event.target.value;
         player.src(list[selectedValue]);
+        player.cmcd().setId({cid: list[selectedValue].src});
       });
     }(window, window.videojs));
   </script>

@@ -48,12 +48,12 @@ class Cmcd extends Plugin {
 
       if (this.player.tech(true).vhs) {
 
-        this.beforeRequestFunc(this.player);
+        this._beforeRequestFunc(this.player);
 
       } else {
         this.player.on('loadstart', () => {
 
-          this.beforeRequestFunc(this.player);
+          this._beforeRequestFunc(this.player);
 
         });
       }
@@ -70,19 +70,19 @@ class Cmcd extends Plugin {
     }
   }
 
-  beforeRequestFunc(player) {
+  _beforeRequestFunc() {
     // Save original beforeRequest function
-    const obr = player.tech(true).vhs.xhr.beforeRequest;
+    const obr = this.player.tech(true).vhs.xhr.beforeRequest;
 
-    player.tech(true).vhs.xhr.beforeRequest = (opts) => {
-      const cmcdRequest = new CmcdRequest(player);
-      const cmcdObject = new CmcdObject(player);
-      const cmcdSession = new CmcdSession(player, this.sid, this.cid);
-      const cmcdStatus = new CmcdStatus(player);
+    this.player.tech(true).vhs.xhr.beforeRequest = (opts) => {
+      const cmcdRequest = new CmcdRequest(this.player);
+      const cmcdObject = new CmcdObject(this.player);
+      const cmcdSession = new CmcdSession(this.player, this.sid, this.cid);
+      const cmcdStatus = new CmcdStatus(this.player);
 
       const keyRequest = cmcdRequest.getKeys(opts.uri, isWaitingEvent);
       const keyObject = cmcdObject.getKeys(opts.uri);
-      const keySession = cmcdSession.getKeys(player.currentSrc());
+      const keySession = cmcdSession.getKeys(this.player.currentSrc());
       const keyStatus = cmcdStatus.getKeys(isWaitingEvent);
       const cmcdKeysObject = Object.assign({}, keyRequest, keyObject, keySession, keyStatus);
 
@@ -100,7 +100,6 @@ class Cmcd extends Plugin {
       return opts;
     };
   }
-
 }
 
 function buildQueryString(obj) {
