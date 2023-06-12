@@ -155,43 +155,24 @@ player.cmcd().setId({sid: 'SessionID', cid: 'ContentID'});
 This table provides information about the CMCD keys, how they are obtained, the difficulty of doing so and if they are implemented or even required.
 
 |Description|Key Name|Header Name|Type and Unit|How to obtain it's value|Comments and calculation|Easy / Diff|Implemented
-
 |--|--|--|--|--|--|--|--|
-
 |Encoded bitrate|br|CMCD-Object|Integer kbps | in vhs, playlists.media, attributes.BANDWIDTH property | Change the unit of BANDWIDTH from bps to kbps (/1000) | Diff | Yes
-
 |Buffer length|bl|CMCD-Request|Integer milliseconds | in tech() buffered().length, buffered().end(index) and currentTime() properties | Use the last saved segment index as a parameter that receives the end() method, and with the result, subtract it from the current time position of the player | Diff | Yes
-
 |Buffer starvation|bs|CMCD-Status|Boolean |'loadedmetadata' and 'waiting' events | Not taken into account when not initialized | Diff | Yes
-
 |Content ID|cid|CMCD-Session|String | If not specified it will be a hash of the MPD/M3U8 URL| This idea is implemented on dash.js plugin |Diff| Yes
-
 |Object duration|d|CMCD-Object|Integer milliseconds | in vhs playlists.media, segments[index].duration property|Use the segment index. * 1000 to convert to milliseconds | Diff | Yes
-
 |Deadline|dl|CMCD-Request|Integer milliseconds| "player.playbackRate()" method | (bufferLength / playbackRate) * 1000, bufferLength as obtained in bl key | Diff | Yes
-
 |Measured throughput|mtp|CMCD-Request|Integer kilobits per second (kbps)| in tech, vhs.systemBandwidth property | change the unit of systemBandwidth from bps to kbps (/1000) | Easy | Yes
-
 |Next object request|nor|CMCD-Request|String | in vhs, playlists.media, segments property | For VOD: Use the property to find the segment that is being requested and keep the next one. The relative path is in segments[i].uri Note: does not work in Live streams | Diff | Yes (no Live Streams)
-
-|Next range request|nrr|CMCD-Request|String of the form "\<range-start>-<range-end\>"|Unknown |It will not be implemented| Diff | No
-
+|Next range request|nrr|CMCD-Request|String of the form "\<range-start>-<range-end\>"|Unknown |It will not be implemented| Diff | No 
 |Object type|ot|CMCD-Object|Token - one of [m, a,v,av,i,c,tt,k,o]| Use the request uri file extension (.m3u8, .ts, etc.) | This implementation is temporary for the first Version of the PlugIn | Diff | Yes
-
 |Playback rate|pr|CMCD-Session|Decimal| "player.playbackRate()" method | |Easy| Yes
-
-|Requested maximum throughput|rtp|CMCD-Status|Integer kilobits per second (kbps) | Unknown | It will not be implemented for the first release | Diff | No
-
+|Requested maximum throughput|rtp|CMCD-Status|Integer kilobits per second (kbps) | Unknown | It will not be implemented for the first release | Diff | No 
 |Streaming format|sf|CMCD-Session|Token - one of [d,h,s,o]| "player.currentType()" method | VideoJS does not support smooth streaming | Easy | Yes
-
 |Session ID|sid|CMCD-Session|String| A function that create an universally unique identifiers (UUID)| We use crypto.randomUUID(), have to check what other implementations do | Easy | Yes
-
-|Stream type|st|CMCD-Session|Token - one of [v,l]| if "player.duration()" is infinite then it's live, otherwise it's VOD | | Easy | Yes
-
-|Startup|su|CMCD-Request|Boolean| 'loadedmetadata' and 'waiting' events | Debt: find a method to identify "recovery after a buffer-empty event" | Diff | Yes
-
+|Stream type|st|CMCD-Session|Token - one of [v,l]| if "player.duration()" is infinite then it's live, otherwise it's VOD  |  | Easy | Yes
+|Startup|su|CMCD-Request|Boolean| 'loadedmetadata' and 'waiting' events | Debt: find a method to identify "recovery after a buffer-empty event" | Diff | Yes  
 |Top bitrate|tb|CMCD-Object|Integer Kbps| Extract highest bandwidth possible in the manifest | Have to investigate what other implementations do | Diff | Yes
-
 |CMCD version|v|CMCD-Session|Integer |Currently there is only one version available which is version 1 | Ommited according to CTA-5004 specs | Easy | Yes :)
 
 ## Contributing
