@@ -144,6 +144,9 @@ var  player = videojs('videojs-cmcd-player');
 player.cmcd();
 
 ```
+> **_NOTE:_**  You can use the instance of the plugin to modify the CID and SID  parameters like this: ```player.cmcd({sid:'SessionID', cid:'ContentID'});```
+
+
 You can also use the plugin function ````SetId()```` to set a Session ID or a Content ID dinamically.
 ```js
 player.cmcd().setId({sid: 'SessionID', cid: 'ContentID'});
