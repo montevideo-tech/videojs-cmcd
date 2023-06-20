@@ -37,8 +37,9 @@ class Cmcd extends Plugin {
     // the parent class will add player under this.player
     super(player);
     this.options = videojs.obj.merge(defaults, options);
-    const {sid} = options || {};
+    const {sid, cid} = options || {};
 
+    this.cid = cid;
     this.sid = sid || generateUuid();
 
     this.player.ready(() => {
