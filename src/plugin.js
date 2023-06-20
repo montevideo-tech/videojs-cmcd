@@ -4,7 +4,7 @@ import { CmcdRequest } from './cmcdKeys/cmcdRequest';
 import { CmcdObject } from './cmcdKeys/cmcdObject';
 import { CmcdSession } from './cmcdKeys/cmcdSession';
 import { CmcdStatus } from './cmcdKeys/cmcdStatus';
-import { showBufferlengthKey } from './cmcdKeys/common';
+import { appendCmcdQuery } from '@svta/common-media-library/cmcd/appendCmcdQuery';
 
 const Plugin = videojs.getPlugin('plugin');
 
@@ -87,58 +87,14 @@ class Cmcd extends Plugin {
       const keyStatus = cmcdStatus.getKeys(isWaitingEvent);
       const cmcdKeysObject = Object.assign({}, keyRequest, keyObject, keySession, keyStatus);
 
-      if (opts.uri.match(/\?./)) {
-        opts.uri += `&CMCD=${buildQueryString(cmcdKeysObject)}`;
+      opts.uri = appendCmcdQuery(opts.uri, cmcdKeysObject);
 
-      } else {
-
-        opts.uri += `?CMCD=${buildQueryString(cmcdKeysObject)}`;
-      }
-      // Use original beforeRequest funciton to (chain it)
       if (obr) {
         obr(opts);
       }
       return opts;
     };
   }
-}
-
-function buildQueryString(obj) {
-  let query = '';
-  const sortedObj = Object.keys(obj).sort().reduce((objEntries, key) => {
-    if (obj[key] !== undefined) {
-      objEntries[key] = obj[key];
-    }
-    return objEntries;
-  }, {});
-
-  for (const [key, value] of Object.entries(sortedObj)) {
-    const type = typeof value;
-
-    if (key === 'v' && value === 1) {
-      continue;
-    }
-    if (key === 'pr' && value === 1) {
-      continue;
-    }
-    if (type === 'boolean' && !value) {
-      continue;
-    }
-    if (key === 'bl' && !showBufferlengthKey(sortedObj)) {
-      continue;
-    }
-    // Add condition of buffer length
-    // Add condition of buffer starvation
-
-    if (key === 'ot' || key === 'sf' || key === 'st') {
-      query += `${key}=${value},`;
-    } else if (type === 'boolean') {
-      query += `${key},`;
-    } else {
-      query += `${key}=${JSON.stringify(value)},`;
-    }
-  }
-  return encodeURIComponent(query.slice(0, -1));
 }
 
 function generateUuid() {
