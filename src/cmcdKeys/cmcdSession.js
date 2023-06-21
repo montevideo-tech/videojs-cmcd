@@ -1,7 +1,8 @@
 export class CmcdSession {
-  constructor(player, sid) {
+  constructor(player, sid, cid) {
     this.player = player;
     this.sid = sid;
+    this.cid = cid;
   }
 
   generateHashCode(string) {
@@ -20,6 +21,9 @@ export class CmcdSession {
   }
 
   getContentId(src) {
+    if (this.cid) {
+      return this.cid;
+    }
     try {
       const cid = this.generateHashCode(src);
 
