@@ -1,29 +1,26 @@
 # videojs-cmcd
-
   
 
 A [video.js][videojs] plugin for adding Common-Media-Client-Data (CMCD) to the player requests.
 
   
-
 ## Content
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Installation and Usage](#installation-and-usage)
-  - [Vanilla Javascript](#vanilla-javascript)
-  - [NPM](#npm)
-  - [Usage](#usage)
-- [CMCD Standard implementation status](#cmcd-standard-implementation-status)
-- [Contributing](#contributing)
-  - [Setup your development environment](#setup-your-development-environment)
-- [License](#license)
+- [videojs-cmcd](#videojs-cmcd)
+  - [Content](#content)
+  - [Installation and Usage](#installation-and-usage)
+    - [Vanilla Javascript](#vanilla-javascript)
+    - [NPM](#npm)
+    - [Usage](#usage)
+  - [CMCD Standard implementation status](#cmcd-standard-implementation-status)
+  - [Contributing](#contributing)
+    - [Setup your development environment](#setup-your-development-environment)
+  - [License](#license)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-  
-  
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->  
 
 ## Installation and Usage
 
@@ -51,25 +48,24 @@ Then you will have to initalize the plugin after the creation of the player.
 
 <script>
 
-var  player = videojs('my-video');
 
-player.cmcd();
+var player = videojs('my-video');
+
+player.cmcd({sid:'SessionID', cid:'ContentID'});
 
 </script>
 
 ```
 
-  
+> **_NOTE:_**  You can use the instance of the plugin to set the CID and SID parameters as it's shown above.
 
-This is a complete example the plugin.
 
-  
+This is a complete example of the plugin.
 
 ```html
 
 <html>
 
-  
 
 <head>
 
@@ -101,7 +97,7 @@ var  player = videojs('videojs-cmcd-player');
 
 // Init the CMCD Plugin
 
-player.cmcd();
+player.cmcd({sid:'SessionID', cid:'ContentID'});
 
 // Load a video
 
@@ -112,12 +108,10 @@ player.src("https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_va
 </body>
 
   
-
 </html>
 
 ```
 
-  
 
 ### NPM
 
@@ -175,7 +169,8 @@ This table provides information about the CMCD keys, how they are obtained, the 
 |Stream type|st|CMCD-Session|Token - one of [v,l]| if "player.duration()" is infinite then it's live, otherwise it's VOD  |  | Easy | Yes
 |Startup|su|CMCD-Request|Boolean| 'loadedmetadata' and 'waiting' events | Debt: find a method to identify "recovery after a buffer-empty event" | Diff | Yes  
 |Top bitrate|tb|CMCD-Object|Integer Kbps| Extract highest bandwidth possible in the manifest | Have to investigate what other implementations do | Diff | Yes
-|CMCD version|v|CMCD-Session|Integer |Currently there is only one version available which is version 1 | Ommited according to CTA-5004 specs | Easy | Yes :)
+|CMCD version|v|CMCD-Session|Integer |Currently there is only one version available which is version 1 | Ommited according to CTA-5004 specs | Easy | Yes
+
 
 ## Contributing
 
