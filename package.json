@@ -77,7 +77,7 @@
     "@montevideo-tech/cmcd-validator": "^0.3.1",
     "@svta/common-media-library": "^0.4.2",
     "global": "^4.4.0",
-    "video.js": "^8.2.0"
+    "video.js": "^8.5.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",
