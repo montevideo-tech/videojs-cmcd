@@ -47,17 +47,28 @@ class Cmcd extends Plugin {
 
       handleEvents(player);
 
-      if (this.player.tech(true).vhs) {
+      player.on('xhr-hooks-ready', () => {
 
-        this._beforeRequestFunc(this.player);
+        const playerXhrRequestHook = (opts) => {
+          const cmcdRequest = new CmcdRequest(this.player);
+          const cmcdObject = new CmcdObject(this.player);
+          const cmcdSession = new CmcdSession(this.player, this.sid, this.cid);
+          const cmcdStatus = new CmcdStatus(this.player);
 
-      } else {
-        this.player.on('loadstart', () => {
+          const keyRequest = cmcdRequest.getKeys(opts.uri, isWaitingEvent);
+          const keyObject = cmcdObject.getKeys(opts.uri);
+          const keySession = cmcdSession.getKeys(this.player.currentSrc());
+          const keyStatus = cmcdStatus.getKeys(isWaitingEvent);
+          const cmcdKeysObject = Object.assign({}, keyRequest, keyObject, keySession, keyStatus);
 
-          this._beforeRequestFunc(this.player);
+          opts.uri = appendCmcdQuery(opts.uri, cmcdKeysObject);
 
-        });
-      }
+          return opts;
+        };
+
+        player.tech().vhs.xhr.onRequest(playerXhrRequestHook);
+      });
+
     });
 
   }
@@ -71,30 +82,6 @@ class Cmcd extends Plugin {
     }
   }
 
-  _beforeRequestFunc() {
-    // Save original beforeRequest function
-    const obr = this.player.tech(true).vhs.xhr.beforeRequest;
-
-    this.player.tech(true).vhs.xhr.beforeRequest = (opts) => {
-      const cmcdRequest = new CmcdRequest(this.player);
-      const cmcdObject = new CmcdObject(this.player);
-      const cmcdSession = new CmcdSession(this.player, this.sid, this.cid);
-      const cmcdStatus = new CmcdStatus(this.player);
-
-      const keyRequest = cmcdRequest.getKeys(opts.uri, isWaitingEvent);
-      const keyObject = cmcdObject.getKeys(opts.uri);
-      const keySession = cmcdSession.getKeys(this.player.currentSrc());
-      const keyStatus = cmcdStatus.getKeys(isWaitingEvent);
-      const cmcdKeysObject = Object.assign({}, keyRequest, keyObject, keySession, keyStatus);
-
-      opts.uri = appendCmcdQuery(opts.uri, cmcdKeysObject);
-
-      if (obr) {
-        obr(opts);
-      }
-      return opts;
-    };
-  }
 }
 
 function generateUuid() {
