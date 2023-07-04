@@ -3,24 +3,23 @@
 
 A [video.js][videojs] plugin for adding Common-Media-Client-Data (CMCD) to the player requests.
 
+> **_NOTE:_**  This plugin only works for VideoJs 8.4.0 and above.
   
 ## Content
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [videojs-cmcd](#videojs-cmcd)
-  - [Content](#content)
-  - [Installation and Usage](#installation-and-usage)
-    - [Vanilla Javascript](#vanilla-javascript)
-    - [NPM](#npm)
-    - [Usage](#usage)
-  - [CMCD Standard implementation status](#cmcd-standard-implementation-status)
-  - [Contributing](#contributing)
-    - [Setup your development environment](#setup-your-development-environment)
-  - [License](#license)
+- [Installation and Usage](#installation-and-usage)
+  - [Vanilla Javascript](#vanilla-javascript)
+  - [NPM](#npm)
+  - [Usage](#usage)
+- [CMCD Standard implementation status](#cmcd-standard-implementation-status)
+- [Contributing](#contributing)
+  - [Setup your development environment](#setup-your-development-environment)
+- [License](#license)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->  
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Installation and Usage
 
