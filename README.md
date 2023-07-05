@@ -1,6 +1,5 @@
-# videojs-cmcd
-  
-![Alt text](image link)
+
+![Alt text](https://github.com/montevideo-tech/videojs-cmcd/blob/fadc3721bf1c43e8a38325f8ba5c9566a2bafccc/images/banner%202%20videojs.png)
 
 A [video.js][videojs] plugin for adding Common-Media-Client-Data (CMCD) to the player requests.
 
@@ -83,7 +82,7 @@ This is a complete example of the plugin.
 
   
 
-<script  src="https://vjs.zencdn.net/8.3.0/video.min.js"></script>
+<script  src="https://vjs.zencdn.net/8.5.0/video.min.js"></script>
 
 <script  src="https://cdn.jsdelivr.net/npm/@montevideo-tech/videojs-cmcd@latest/dist/videojs-cmcd.min.js"></script>
 
