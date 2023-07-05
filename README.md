@@ -143,7 +143,8 @@ You can also use the plugin function ````SetId()```` to set a Session ID or a Co
 ```js
 player.cmcd().setId({sid: 'SessionID', cid: 'ContentID'});
 ```
-  
+> **_NOTE:_**  If you don't provide a SID and CID, the plugin will automatically generate them (A hash code for CID and a UUID for SID).
+
 
 ## CMCD Standard implementation status
 
