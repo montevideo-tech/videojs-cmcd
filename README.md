@@ -1,26 +1,25 @@
-# videojs-cmcd
-  
+
+![Alt text](https://github.com/montevideo-tech/videojs-cmcd/blob/fadc3721bf1c43e8a38325f8ba5c9566a2bafccc/images/banner%202%20videojs.png)
 
 A [video.js][videojs] plugin for adding Common-Media-Client-Data (CMCD) to the player requests.
 
+> **_NOTE:_**  This plugin only works for VideoJs 8.4.0 and above.
   
 ## Content
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [videojs-cmcd](#videojs-cmcd)
-  - [Content](#content)
-  - [Installation and Usage](#installation-and-usage)
-    - [Vanilla Javascript](#vanilla-javascript)
-    - [NPM](#npm)
-    - [Usage](#usage)
-  - [CMCD Standard implementation status](#cmcd-standard-implementation-status)
-  - [Contributing](#contributing)
-    - [Setup your development environment](#setup-your-development-environment)
-  - [License](#license)
+- [Installation and Usage](#installation-and-usage)
+  - [Vanilla Javascript](#vanilla-javascript)
+  - [NPM](#npm)
+  - [Usage](#usage)
+- [CMCD Standard implementation status](#cmcd-standard-implementation-status)
+- [Contributing](#contributing)
+  - [Setup your development environment](#setup-your-development-environment)
+- [License](#license)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->  
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Installation and Usage
 
@@ -71,7 +70,7 @@ This is a complete example of the plugin.
 
 <title>videojs-cmcd demo</title>
 
-<link  href="https://vjs.zencdn.net/8.3.0/video-js.css"  rel="stylesheet">
+<link  href="https://cdn.jsdelivr.net/npm/video.js@8.5.0/dist/video-js.min.css"  rel="stylesheet">
 
 </head>
 
@@ -83,7 +82,7 @@ This is a complete example of the plugin.
 
   
 
-<script  src="https://vjs.zencdn.net/8.3.0/video.min.js"></script>
+<script  src="https://cdn.jsdelivr.net/npm/video.js@8.5.0/dist/video.min.js"></script>
 
 <script  src="https://cdn.jsdelivr.net/npm/@montevideo-tech/videojs-cmcd@latest/dist/videojs-cmcd.min.js"></script>
 
@@ -144,7 +143,7 @@ You can also use the plugin function ````SetId()```` to set a Session ID or a Co
 ```js
 player.cmcd().setId({sid: 'SessionID', cid: 'ContentID'});
 ```
-  
+> **_NOTE:_**  If you don't provide a SID and CID, the plugin will automatically generate them (A hash code for CID and a UUID for SID). You can retrieve any of them by instancing "player.cmcd().sid" or "player.cmcd().cid" respectively.
 
 ## CMCD Standard implementation status
 
