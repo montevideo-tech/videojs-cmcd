@@ -70,7 +70,7 @@ This is a complete example of the plugin.
 
 <title>videojs-cmcd demo</title>
 
-<link  href="https://vjs.zencdn.net/8.5.0/video-js.css"  rel="stylesheet">
+<link  href="https://cdn.jsdelivr.net/npm/video.js@8.5.0/dist/video-js.min.css"  rel="stylesheet">
 
 </head>
 
@@ -82,7 +82,7 @@ This is a complete example of the plugin.
 
   
 
-<script  src="https://vjs.zencdn.net/8.5.0/video.min.js"></script>
+<script  src="https://cdn.jsdelivr.net/npm/video.js@8.5.0/dist/video.min.js"></script>
 
 <script  src="https://cdn.jsdelivr.net/npm/@montevideo-tech/videojs-cmcd@latest/dist/videojs-cmcd.min.js"></script>
 
