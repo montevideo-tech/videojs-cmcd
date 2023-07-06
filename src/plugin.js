@@ -5,6 +5,7 @@ import { CmcdObject } from './cmcdKeys/cmcdObject';
 import { CmcdSession } from './cmcdKeys/cmcdSession';
 import { CmcdStatus } from './cmcdKeys/cmcdStatus';
 import { appendCmcdQuery } from '@svta/common-media-library/cmcd/appendCmcdQuery';
+import { keyTypes } from './cmcdKeys/common.js';
 
 const Plugin = videojs.getPlugin('plugin');
 
@@ -37,10 +38,11 @@ class Cmcd extends Plugin {
     // the parent class will add player under this.player
     super(player);
     this.options = videojs.obj.merge(defaults, options);
-    const {sid, cid} = options || {};
+    const {sid, cid, useHeaders} = options || {};
 
     this.cid = cid;
     this.sid = sid || generateUuid();
+    this.useHeaders = useHeaders;
 
     this.player.ready(() => {
       player.addClass('vjs-cmcd');
@@ -59,9 +61,25 @@ class Cmcd extends Plugin {
           const keyObject = cmcdObject.getKeys(opts.uri);
           const keySession = cmcdSession.getKeys(this.player.currentSrc());
           const keyStatus = cmcdStatus.getKeys(isWaitingEvent);
-          const cmcdKeysObject = Object.assign({}, keyRequest, keyObject, keySession, keyStatus);
 
-          opts.uri = appendCmcdQuery(opts.uri, cmcdKeysObject);
+          if (this.useHeaders) {
+            const headers = toHeader({
+              'CMCD-Request': keyRequest,
+              'CMCD-Object': keyObject,
+              'CMCD-Session': keySession,
+              'CMCD-Status': keyStatus
+            });
+
+            opts.beforeSend = (xhr) => {
+              for (const h in headers) {
+                xhr.setRequestHeader(h, headers[h]);
+              }
+            };
+          } else {
+            const cmcdKeysObject = Object.assign({}, keyRequest, keyObject, keySession, keyStatus);
+
+            opts.uri = appendCmcdQuery(opts.uri, cmcdKeysObject);
+          }
 
           return opts;
         };
@@ -102,6 +120,34 @@ function generateUuid() {
   const hexString = hexDigits.join('');
 
   return `${hexString.slice(0, 8)}-${hexString.slice(8, 12)}-4${hexString.slice(13, 16)}-${String.fromCharCode((uuid[8] & 0x0f) | 0x80)}${hexString.slice(17, 20)}-${hexString.slice(20)}`;
+}
+
+function objToString(obj) {
+  const keys = Object.keys(obj);
+  const keyValPair = keys.map((key) => {
+    if (keyTypes[key] === 'string') {
+      return `${key}="${obj[key]}"`;
+    } else if (keyTypes[key] === 'boolean' && obj[key] === true) {
+      return `${key}`;
+    }
+    return `${key}=${obj[key]}`;
+
+  });
+
+  return keyValPair.filter(s => !s.includes('undefined')).join(',');
+}
+
+function toHeader(cmcdHeaders) {
+  const headers = {};
+
+  for (const header in cmcdHeaders) {
+    const str = objToString(cmcdHeaders[header]);
+
+    if (str.length !== 0) {
+      headers[header] = str;
+    }
+  }
+  return headers;
 }
 
 function handleEvents(player) {

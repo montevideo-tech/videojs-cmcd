@@ -16,3 +16,24 @@ export const showBufferlengthKey = (cmcdObject) => {
   }
   return false;
 };
+
+export const keyTypes = {
+  br: 'number',
+  bl: 'number',
+  bs: 'boolean',
+  cid: 'string',
+  d: 'number',
+  dl: 'number',
+  mtp: 'number',
+  nor: 'string',
+  nrr: 'string',
+  ot: 'token',
+  pr: 'number',
+  rtp: 'number',
+  sf: 'token',
+  sid: 'string',
+  st: 'token',
+  su: 'boolean',
+  tb: 'number',
+  v: 'number'
+};
