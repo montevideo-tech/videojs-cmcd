@@ -55,8 +55,8 @@ class Cmcd extends Plugin {
           const cmcdSession = new CmcdSession(this.player, this.sid, this.cid);
           const cmcdStatus = new CmcdStatus(this.player);
 
-          const keyRequest = cmcdRequest.getKeys(opts.uri, isWaitingEvent);
           const keyObject = cmcdObject.getKeys(opts.uri);
+          const keyRequest = cmcdRequest.getKeys(opts.uri, isWaitingEvent, keyObject.ot);
           const keySession = cmcdSession.getKeys(this.player.currentSrc());
           const keyStatus = cmcdStatus.getKeys(isWaitingEvent);
           const cmcdKeysObject = Object.assign({}, keyRequest, keyObject, keySession, keyStatus);
