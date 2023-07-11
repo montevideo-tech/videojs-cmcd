@@ -97,8 +97,8 @@ export class CmcdRequest {
     res.mtp = this.getMeasuredThroughput();
     res.nor = this.getNextObjectRequest(actualURIrequest);
     res.nrr = this.getNextRangeRequest();
-    if (!isWaitingEvent) {
-      res.su = this.isWaitingEvent;
+    if (isWaitingEvent !== false) {
+      res.su = isWaitingEvent;
     }
     return res;
   }

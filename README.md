@@ -58,6 +58,21 @@ player.cmcd({sid:'SessionID', cid:'ContentID'});
 
 > **_NOTE:_**  You can use the instance of the plugin to set the CID and SID parameters as it's shown above.
 
+To include CMCD data in the request headers instead of query arguments, simply set the 'useHeaders' configuration value to 'true' when initializing the plugin. By default, CMCD data is transmitted via query arguments.
+
+```html
+
+<script>
+
+
+var player = videojs('my-video');
+
+player.cmcd({sid:'SessionID', cid:'ContentID', useHeaders: true});
+
+</script>
+
+```
+
 
 This is a complete example of the plugin.
 
