@@ -87,11 +87,11 @@ export class CmcdRequest {
     return undefined;
   }
 
-  getKeys(actualURIrequest, isWaitingEvent, otType) {
+  getKeys(actualURIrequest, isWaitingEvent, otValue) {
     const res = {};
 
-    if (['a', 'av', 'v'].includes(otType)) {
-      res.bl = this.getBufferLength;
+    if (['a', 'v', 'av'].includes(otValue)) {
+      res.bl = this.getBufferLength();
     }
     res.dl = this.getDeadline();
     res.mtp = this.getMeasuredThroughput();
