@@ -82,13 +82,18 @@ export class CmcdSession {
   }
 
   getKeys(src) {
-    return {
-      cid: this.getContentId(src),
-      pr: this.getPlaybackRate(),
-      sf: this.getStreamingFormat(),
-      sid: this.sid,
-      st: this.getStreamType(),
-      v: this.getVersion()
-    };
+    const res = {};
+
+    res.cid = this.getContentId(src);
+    if (this.getPlaybackRate() !== 1) {
+      res.pr = this.getPlaybackRate();
+    }
+    res.sf = this.getStreamingFormat();
+    res.sid = this.sid;
+    res.st = this.getStreamType();
+    if (this.getVersion() !== 1) {
+      res.v = this.getVersion();
+    }
+    return res;
   }
 }
