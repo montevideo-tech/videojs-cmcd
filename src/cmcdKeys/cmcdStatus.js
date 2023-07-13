@@ -4,7 +4,6 @@ export class CmcdStatus {
   }
 
   getBufferStarvation(isWaitingEvent) {
-    // TODO
     try {
       return isWaitingEvent;
     } catch (e) {
@@ -18,9 +17,13 @@ export class CmcdStatus {
   }
 
   getKeys(isWaitingEvent) {
-    return {
-      bs: this.getBufferStarvation(isWaitingEvent),
-      rtp: this.getRequestedMaximumThroughput()
-    };
+    const res = {};
+
+    if (isWaitingEvent !== false) {
+      res.bs = this.getBufferStarvation(isWaitingEvent);
+    }
+    res.rtp = this.getRequestedMaximumThroughput();
+
+    return res;
   }
 }
