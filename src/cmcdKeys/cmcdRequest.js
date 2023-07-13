@@ -87,14 +87,19 @@ export class CmcdRequest {
     return undefined;
   }
 
-  getKeys(actualURIrequest, isWaitingEvent) {
-    return {
-      bl: this.getBufferLength(),
-      dl: this.getDeadline(),
-      mtp: this.getMeasuredThroughput(),
-      nor: this.getNextObjectRequest(actualURIrequest),
-      nrr: this.getNextRangeRequest(),
-      su: isWaitingEvent
-    };
+  getKeys(actualURIrequest, isWaitingEvent, otValue) {
+    const res = {};
+
+    if (['a', 'v', 'av'].includes(otValue)) {
+      res.bl = this.getBufferLength();
+    }
+    res.dl = this.getDeadline();
+    res.mtp = this.getMeasuredThroughput();
+    res.nor = this.getNextObjectRequest(actualURIrequest);
+    res.nrr = this.getNextRangeRequest();
+    if (isWaitingEvent !== false) {
+      res.su = isWaitingEvent;
+    }
+    return res;
   }
 }
