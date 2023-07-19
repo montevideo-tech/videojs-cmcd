@@ -27,7 +27,7 @@ A [video.js][videojs] plugin for adding Common-Media-Client-Data (CMCD) to the p
 
   
 
-This is the simplest case. Get the script in whichever way you prefer and include the plugin _after_ you include [video.js][videojs], so that the `videojs` global is available. Yoy can copy past the next `<script>` tag
+This is the simplest case. Get the script in whichever way you prefer and include the plugin _after_ you include [video.js][videojs], so that the `videojs` global is available. Yoy can copy paste the next `<script>` tag
 
   
 
