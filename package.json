@@ -81,6 +81,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
     "@babel/runtime": "^7.14.0",
     "@videojs/babel-config": "^0.2.0",
     "@videojs/generator-helpers": "~3.0.0",
