@@ -1,8 +1,9 @@
-import videojs from 'video.js';
-import {version as VERSION} from '../package.json';
 import { appendCmcdHeaders } from '@svta/common-media-library/cmcd/appendCmcdHeaders';
 import { appendCmcdQuery } from '@svta/common-media-library/cmcd/appendCmcdQuery';
 import { uuid } from '@svta/common-media-library/utils/uuid';
+import videojs from 'video.js';
+import { version as VERSION } from '../package.json';
+import { CmcdData } from './CmcdData.js';
 
 const Plugin = videojs.getPlugin('plugin');
 
@@ -49,7 +50,7 @@ class Cmcd extends Plugin {
       player.on('xhr-hooks-ready', () => {
 
         const playerXhrRequestHook = (opts) => {
-          const cmcd = new Cmcd(this.player, this.sid, this.cid);
+          const cmcd = new CmcdData(this.player, this.sid, this.cid);
           const keys = cmcd.getKeys(opts.uri, isWaitingEvent, this.player.currentSrc());
 
           if (this.useHeaders) {

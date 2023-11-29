@@ -75,7 +75,7 @@
   },
   "dependencies": {
     "@montevideo-tech/cmcd-validator": "^0.3.1",
-    "@svta/common-media-library": "^0.4.5",
+    "@svta/common-media-library": "^0.5.1",
     "global": "^4.4.0",
     "video.js": "^8.5.0"
   },

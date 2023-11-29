@@ -2,7 +2,7 @@ import { CmcdObjectType } from '@svta/common-media-library/cmcd/CmcdObjectType';
 import { CmcdStreamType } from '@svta/common-media-library/cmcd/CmcdStreamType';
 import { CmcdStreamingFormat } from '@svta/common-media-library/cmcd/CmcdStreamingFormat';
 
-export class Cmcd {
+export class CmcdData {
   constructor(player, sid, cid) {
     this.player = player;
     this.vhs = player.tech(true).vhs;
